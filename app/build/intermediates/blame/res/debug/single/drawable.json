@@ -1,11 +1,11 @@
 [
     {
-        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\tooltip_frame_dark.xml",
-        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\tooltip_frame_dark.xml"
-    },
-    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\tooltip_frame_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\tooltip_frame_dark.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
@@ -28,12 +28,12 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_textfield_search_material.xml"
     },
     {
-        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
-        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_btn_check_material.xml"
-    },
-    {
         "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
         "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\warn.png",
@@ -64,12 +64,12 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\drawable\\notification_icon_background.xml"
     },
     {
-        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
-        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
-    },
-    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
     },
     {
         "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
@@ -80,12 +80,12 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
-        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
-        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
-    },
-    {
         "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
         "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",

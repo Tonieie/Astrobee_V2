@@ -81,7 +81,7 @@ public class YourService extends KiboRpcService {
         StringDecode QRData = new StringDecode();
         QRData.setString(qr_str);
         Log.d("QR","End to read QR");
-        Log.d("QR","x : " + String.valueOf(QRData.x));
+        Log.d("QR", String.format("x : %f",QRData.x));
 
         //ARUCO
         //ARmodel ArucoModel = new ARmodel();
