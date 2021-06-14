@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\f166a873a787bfd90d555bd8cc892ec894618ad2\\output\\res\\layout-v21\\notification_action.xml"
+    }
+]

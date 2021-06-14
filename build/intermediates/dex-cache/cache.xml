@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\32d15a46d9752ce05afa7774a91c1c13651f1820\output\jars\libs\ros-1.0-SNAPSHOT.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a572c1afbdb69a1fa3f641c662eade8ed245bc2c">
+        <dex dex="E:\Tonie\Documents\KiboRPC\DefaultApk\app\build\intermediates\transforms\dex\debug\folders\1000\10\ros-1.0-SNAPSHOT_2b9289d3020f4c6e8c29742f124c14b68137501c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\32d15a46d9752ce05afa7774a91c1c13651f1820\output\jars\libs\api-1.0-SNAPSHOT.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d0c375d9be8682ad66b1dcc36f23e7042ebab943">
+        <dex dex="E:\Tonie\Documents\KiboRPC\DefaultApk\app\build\intermediates\transforms\dex\debug\folders\1000\10\api-1.0-SNAPSHOT_41ca93e071b59e2ae5b68342df4f8f3653942d44\classes.dex" />
+    </item>
+
+</items>
