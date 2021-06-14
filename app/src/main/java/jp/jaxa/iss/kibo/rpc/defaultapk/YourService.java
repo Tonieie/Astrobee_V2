@@ -57,6 +57,15 @@ public class YourService extends KiboRpcService {
         camMatrix=camparams.getCamMatrix();
         dstMatrix=camparams.getDistortionMat();
     }
+    private Mat croppedImage(){
+        Mat qr_img = api.getMatNavCam();
+
+        imgProc = new imgProcessing();
+        imgProc.findRectContours(qr_img);
+
+        Log.d("QR","Contours complete");
+        return imgProc.sharpenImg;
+    }
 
     @Override
     protected void runPlan1(){
@@ -64,7 +73,14 @@ public class YourService extends KiboRpcService {
         setCamCalibration();
 
         moveToWrapper(11.21,-9.8,4.79,0,0,-0.707,0.707);
-        String qr_list = decodeQRNoCrop();
+
+        Log.d("QR","Strat to read QR");
+        // Mat imageCamera = api.getMatNavCam();
+        Mat imageCamera = croppedImage();
+        String qr_list = decodeQR(imageCamera);
+        Log.d("QR","End to read QR");
+
+
 
         api.reportMissionCompletion();
     }
@@ -80,35 +96,18 @@ public class YourService extends KiboRpcService {
         // write here your plan 3
     }
 
-    public String decodeQR()
+    public String decodeQR(Mat qr_img)
     {
-        Log.d("QR","Strat to read QR");
-        Mat qr_img = api.getMatNavCam();
 
-        imgProc = new imgProcessing();
-        imgProc.findRectContours(qr_img);
-
-        Log.d("QR","Contours complete");
         zbarQR_obj = new zbarQR();
         zbarQR_obj.scanQRImage(imgProc.sharpenImg);
         Log.d("QR","readed : " + zbarQR_obj.qrCodeString);
         api.sendDiscoveredQR(zbarQR_obj.qrCodeString);
-        Log.d("QR","End to read QR");
+
         return zbarQR_obj.qrCodeString;
     }
 
-    public String decodeQRNoCrop()
-    {
-        Log.d("QR","Strat to read QR");
-        Mat qr_img = api.getMatNavCam();
 
-        zbarQR_obj = new zbarQR();
-        zbarQR_obj.scanQRImage(qr_img);
-        Log.d("QR","readed : " + zbarQR_obj.qrCodeString);
-        api.sendDiscoveredQR(zbarQR_obj.qrCodeString);
-        Log.d("QR","End to read QR");
-        return zbarQR_obj.qrCodeString;
-    }
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
                               double qua_w){
