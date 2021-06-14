@@ -72,13 +72,21 @@ public class YourService extends KiboRpcService {
         api.startMission();
         setCamCalibration();
 
+        // QR
         moveToWrapper(11.21,-9.8,4.79,0,0,-0.707,0.707);
-
-        Log.d("QR","Strat to read QR");
+        Log.d("QR","Start to read QR");
         // Mat imageCamera = api.getMatNavCam();
         Mat imageCamera = croppedImage();
-        String qr_list = decodeQR(imageCamera);
+        String qr_str = decodeQR(imageCamera);
+        StringDecode QRData = new StringDecode();
+        QRData.setString(qr_str);
         Log.d("QR","End to read QR");
+        Log.d("QR","x : " + String.valueOf(QRData.x));
+
+        //ARUCO
+        //ARmodel ArucoModel = new ARmodel();
+        //ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
+
 
 
 

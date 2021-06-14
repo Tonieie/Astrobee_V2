@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Jun 15 02:03:54 ICT 2021
+#Tue Jun 15 03:45:22 ICT 2021
 20.base=D\:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\resources-debug.ap_
 143.base=D\:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\folders\\2000\\1f\\main
 439.set=ANDROID_RESOURCE
