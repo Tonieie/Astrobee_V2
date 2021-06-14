@@ -4,6 +4,10 @@
         "source": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
+        "source": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
         "source": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
@@ -14,5 +18,9 @@
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
         "source": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher_round.png",
+        "source": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     }
 ]

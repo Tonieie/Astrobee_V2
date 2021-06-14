@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     },
@@ -16,6 +20,10 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
@@ -26,6 +34,10 @@
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\tooltip_exit.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\tooltip_exit.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
@@ -40,12 +52,28 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_fade_out.xml"
     },
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\tooltip_exit.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\tooltip_exit.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_fade_out.xml"
     },
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_popup_exit.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
@@ -64,12 +92,24 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     },
     {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_popup_exit.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
@@ -90,6 +130,14 @@
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\tooltip_enter.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\tooltip_enter.xml"
+    },
+    {
+        "merged": "D:\\Desktop_D\\Programming area\\Kibo-2nd\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\Typhoon-PC\\.android\\build-cache\\86923c72fc02639e8d042777239a0489c70f818a\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\anim\\tooltip_exit.xml",
