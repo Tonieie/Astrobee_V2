@@ -1,5 +1,9 @@
 [
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\icon.png",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\87f4bd3abc3bcf5c51c366d936bde8ffca343aee\\output\\res\\mipmap-hdpi-v4\\icon.png"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\icon.png",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\87f4bd3abc3bcf5c51c366d936bde8ffca343aee\\output\\res\\mipmap-hdpi-v4\\icon.png"
     }

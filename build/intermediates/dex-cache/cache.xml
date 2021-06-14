@@ -3,21 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Tonie\.android\build-cache\32d15a46d9752ce05afa7774a91c1c13651f1820\output\jars\libs\ros-1.0-SNAPSHOT.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="a572c1afbdb69a1fa3f641c662eade8ed245bc2c">
-        <dex dex="E:\Tonie\Documents\KiboRPC\DefaultApk\app\build\intermediates\transforms\dex\debug\folders\1000\10\ros-1.0-SNAPSHOT_2b9289d3020f4c6e8c29742f124c14b68137501c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Tonie\.android\build-cache\32d15a46d9752ce05afa7774a91c1c13651f1820\output\jars\libs\api-1.0-SNAPSHOT.jar"
+        jar="C:\Users\Tonie\.android\build-cache\609befd21d74ad2101fce01eda90c6a55fae6787\output\jars\libs\api-1.0-SNAPSHOT.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.2"
         sha1="d0c375d9be8682ad66b1dcc36f23e7042ebab943">
-        <dex dex="E:\Tonie\Documents\KiboRPC\DefaultApk\app\build\intermediates\transforms\dex\debug\folders\1000\10\api-1.0-SNAPSHOT_41ca93e071b59e2ae5b68342df4f8f3653942d44\classes.dex" />
+        <dex dex="E:\Tonie\Documents\KiboRPC\Astrobee_V2\app\build\intermediates\transforms\dex\debug\folders\1000\10\api-1.0-SNAPSHOT_90f74c3da481400a7341a204dd0d48e4e6a3530e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\609befd21d74ad2101fce01eda90c6a55fae6787\output\jars\libs\ff_msgs-0.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="51d67762d9e1fd4a5e9c715bbfbced78658dddb6">
+        <dex dex="E:\Tonie\Documents\KiboRPC\Astrobee_V2\app\build\intermediates\transforms\dex\debug\folders\1000\10\ff_msgs-0.0.0_73c721184c5991dbb65338ba4df3e245261a47b9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\9d4351b14ad803f3252ca9138ed06e222c1c7886\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1da33e32ab8494d557dfb2f3c3f8e29fdc5d98b7">
+        <dex dex="E:\Tonie\Documents\KiboRPC\Astrobee_V2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a849ad827d32c17a3cf6397253fc22e4169b5261\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\609befd21d74ad2101fce01eda90c6a55fae6787\output\jars\libs\ros-1.0-SNAPSHOT.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a572c1afbdb69a1fa3f641c662eade8ed245bc2c">
+        <dex dex="E:\Tonie\Documents\KiboRPC\Astrobee_V2\app\build\intermediates\transforms\dex\debug\folders\1000\10\ros-1.0-SNAPSHOT_39ac2382365c3dd3d67115ba755e3f0a5d0b07ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Tonie\.android\build-cache\609befd21d74ad2101fce01eda90c6a55fae6787\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="72fd8dff2fe2354cfaca363f3963f3d67fd1febe">
+        <dex dex="E:\Tonie\Documents\KiboRPC\Astrobee_V2\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0254b4387788bf4487b4dc22e86f31c16d3b43d2\classes.dex" />
     </item>
 
 </items>

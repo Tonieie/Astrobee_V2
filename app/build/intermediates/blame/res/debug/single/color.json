@@ -1,11 +1,23 @@
 [
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_search_url_text.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
@@ -28,19 +40,51 @@
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\switch_thumb_material_dark.xml"
     },
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_secondary_text_material_light.xml"
     },
     {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_material_light.xml"
     },
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_search_url_text.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_secondary_text_material_dark.xml"
     },
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
         "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\Tonie\\.android\\build-cache\\ce1a7520532a77fe403a5818ce1e49a286328255\\output\\res\\color\\abc_secondary_text_material_dark.xml"
     }
 ]

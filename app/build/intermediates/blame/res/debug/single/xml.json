@@ -1,5 +1,9 @@
 [
     {
+        "merged": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\build\\intermediates\\res\\merged\\debug\\xml\\commands.xml",
+        "source": "E:\\Tonie\\Documents\\KiboRPC\\Astrobee_V2\\app\\src\\main\\res\\xml\\commands.xml"
+    },
+    {
         "merged": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\build\\intermediates\\res\\merged\\debug\\xml\\commands.xml",
         "source": "E:\\Tonie\\Documents\\KiboRPC\\DefaultApk\\app\\src\\main\\res\\xml\\commands.xml"
     }
