@@ -13,6 +13,7 @@ import org.opencv.aruco.Aruco;
 import org.opencv.aruco.Dictionary;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
+import org.opencv.core.Point3;
 
 import java.util.ArrayList;
 
@@ -73,7 +74,8 @@ public class YourService extends KiboRpcService {
         setCamCalibration();
 
         // QR
-        moveToWrapper(11.21,-9.8,4.79,0,0,-0.707,0.707);
+        Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
+        moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
         Log.d("QR","Start to read QR");
         // Mat imageCamera = api.getMatNavCam();
         Mat imageCamera = croppedImage();
@@ -83,10 +85,13 @@ public class YourService extends KiboRpcService {
         Log.d("QR","End to read QR");
         Log.d("QR", String.format("x : %f",QRData.getPosX()));
 
-        //ARUCO
-        //ARmodel ArucoModel = new ARmodel();
-        //ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
 
+        //ARUCO
+        ARmodel ArucoModel = new ARmodel();
+        ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
+        Point3 AR_target = new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y + ArucoModel.getPosY() ,QR_target.z + ArucoModel.getPosZ());
+        Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+        Log.d("AR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
 
 
 

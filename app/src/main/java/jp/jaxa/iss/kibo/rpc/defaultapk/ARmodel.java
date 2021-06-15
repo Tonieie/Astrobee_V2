@@ -56,7 +56,7 @@ public class ARmodel {
         int loop_cnt = 50;
         for (int i = 0; i < loop_cnt; i++) {
             long start_time = System.currentTimeMillis();
-            estimateV2(img, camMatrix, dstMatrix);
+            estimate(img, camMatrix, dstMatrix);
             long end_time = System.currentTimeMillis();
             long diff_time = end_time - start_time;
             total_time += diff_time;
@@ -67,7 +67,7 @@ public class ARmodel {
 //        System.out.printf("AR time : %d ms\n", (total_time) * 200 / loop_cnt);
     }
 
-    public void estimateV2(Mat img,Mat camMatrix,Mat dstMatrix) {
+    public void estimate(Mat img,Mat camMatrix,Mat dstMatrix) {
 
 
         corners = new ArrayList<>();
