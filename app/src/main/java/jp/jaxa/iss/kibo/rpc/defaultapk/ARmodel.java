@@ -33,8 +33,22 @@ public class ARmodel {
     private static Mat mean_rvecs;
     private static Mat rotationMatrix;
 
+    private static Point3 target_pos=new Point3();
+
     private boolean isID(int index,int id) {
         return ids.get(index,0)[0] == id;
+    }
+
+    public float getPosX() {
+        return (float)target_pos.x;
+    }
+
+    public float getPosY() {
+        return (float)target_pos.y *(-1.0f);
+    }
+
+    public float getPosZ() {
+        return (float)target_pos.z *(-1.0f);
     }
 
     public void estimateTest(Mat img, Mat camMatrix, Mat dstMatrix) {
@@ -72,8 +86,6 @@ public class ARmodel {
             rvecs = new Mat();
             tvecs = new Mat();
             Aruco.estimatePoseSingleMarkers(corners, markerSize, camMatrix, dstMatrix, rvecs, tvecs);
-
-            Point3 target_pos=new Point3();
 
 
             int id_cnt =0;
@@ -115,7 +127,7 @@ public class ARmodel {
                 target_pos.z=target_pos.z+pos_z;
 
 
-                String AR_position = String.format("id %s\t(%.2f,%.2f,%.2f)m",(int)ids.get(i,0)[0],pos_x,pos_y,pos_z);
+//                String AR_position = String.format("id %s\t(%.2f,%.2f,%.2f)m",(int)ids.get(i,0)[0],pos_x,pos_y,pos_z);
 
 
 //				convert rvec to rotation matrix
