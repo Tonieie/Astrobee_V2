@@ -44,11 +44,15 @@ public class ARmodel {
     }
 
     public float getPosY() {
-        return (float)target_pos.y *(-1.0f);
+//        return (float)target_pos.y *(-1.0f);
+//        return (float)target_pos.z;
+        return (float)target_pos.z * (-1.0f);
     }
 
     public float getPosZ() {
-        return (float)target_pos.z *(-1.0f);
+//        return (float)target_pos.z *(-1.0f);
+//        return (float) target_pos.y *(-1.0f);
+        return (float)target_pos.y;
     }
 
     public void estimateTest(Mat img, Mat camMatrix, Mat dstMatrix) {

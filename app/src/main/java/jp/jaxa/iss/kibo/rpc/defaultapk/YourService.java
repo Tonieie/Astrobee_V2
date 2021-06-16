@@ -68,10 +68,51 @@ public class YourService extends KiboRpcService {
         return imgProc.sharpenImg;
     }
 
+    private Quaternion eulerToQuaternion(double yaw_degree, double pitch_degree, double roll_degree){
+
+        double yaw = Math.toRadians(yaw_degree); //radian = degree*PI/180
+        double pitch = Math.toRadians(pitch_degree);
+        double roll = Math.toRadians(roll_degree);
+
+        double cy = Math.cos(yaw * 0.5);
+        double sy = Math.sin(yaw * 0.5);
+        double cp = Math.cos(pitch * 0.5);
+        double sp = Math.sin(pitch * 0.5);
+        double cr = Math.cos(roll * 0.5);
+        double sr = Math.sin(roll * 0.5);
+
+        double qx = sr * cp * cy - cr * sp * sy;
+        double qy = cr * sp * cy + sr * cp * sy;
+        double qz = cr * cp * sy - sr * sp * cy;
+        double qw = cr * cp * cy + sr * sp * sy;
+
+        Quaternion quaternion = new Quaternion((float)qx, (float)qy, (float)qz, (float)qw);
+
+        return quaternion;
+    }
+
     @Override
     protected void runPlan1(){
         api.startMission();
         setCamCalibration();
+
+        Quaternion Q1 = eulerToQuaternion(0,0,0);
+        moveToWrapper( 9.9,-9.806,4.293,Q1.getX(),Q1.getY(),Q1.getZ(),Q1.getW());
+
+        Quaternion Q2 = eulerToQuaternion(90,0,0);
+        moveToWrapper( 9.9,-9.806,4.293,Q2.getX(),Q2.getY(),Q2.getZ(),Q2.getW());
+
+        Quaternion Q5 = eulerToQuaternion(0,0,0);
+        moveToWrapper( 9.9,-9.806,4.293,Q5.getX(),Q5.getY(),Q5.getZ(),Q5.getW());
+
+        Quaternion Q3 = eulerToQuaternion(0,90,0);
+        moveToWrapper( 9.9,-9.806,4.293,Q3.getX(),Q3.getY(),Q3.getZ(),Q3.getW());
+
+        Quaternion Q6 = eulerToQuaternion(0,0,0);
+        moveToWrapper( 9.9,-9.806,4.293,Q6.getX(),Q6.getY(),Q6.getZ(),Q6.getW());
+
+        Quaternion Q4 = eulerToQuaternion(0,0,90);
+        moveToWrapper( 9.9,-9.806,4.293,Q4.getX(),Q4.getY(),Q4.getZ(),Q4.getW());
 
         // QR
         Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
@@ -83,15 +124,24 @@ public class YourService extends KiboRpcService {
         StringDecode QRData = new StringDecode();
         QRData.setString(qr_str);
         Log.d("QR","End to read QR");
-        Log.d("QR", String.format("x : %f",QRData.getPosX()));
+        Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
 
         //ARUCO
         ARmodel ArucoModel = new ARmodel();
         ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
         Point3 AR_target = new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y + ArucoModel.getPosY() ,QR_target.z + ArucoModel.getPosZ());
-        Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
-        Log.d("AR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
+        Log.d("QR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+        Log.d("QR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
+
+        Point3 goal_target =  new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y  ,QR_target.z + ArucoModel.getPosZ());
+        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707);
+        Log.d("QR", "move to A-");
+
+        api.takeSnapshot();
+        Log.d("QR", "take photo");
+        api.laserControl(true);
+        Log.d("QR", "laser");
 
 
 
