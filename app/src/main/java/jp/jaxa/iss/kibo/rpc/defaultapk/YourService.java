@@ -11,6 +11,7 @@ import org.opencv.core.Point3;
 
 import java.util.ArrayList;
 
+import gov.nasa.arc.astrobee.Kinematics;
 import gov.nasa.arc.astrobee.Result;
 import gov.nasa.arc.astrobee.types.Point;
 import gov.nasa.arc.astrobee.types.Quaternion;
@@ -90,29 +91,12 @@ public class YourService extends KiboRpcService {
         api.startMission();
         setCamCalibration();
 
-        Quaternion Q1 = eulerToQuaternion(0,0,0);
-        moveToWrapper( 9.9,-9.806,4.293,Q1.getX(),Q1.getY(),Q1.getZ(),Q1.getW());
-
-        Quaternion Q2 = eulerToQuaternion(90,0,0);
-        moveToWrapper( 9.9,-9.806,4.293,Q2.getX(),Q2.getY(),Q2.getZ(),Q2.getW());
-
-        Quaternion Q5 = eulerToQuaternion(0,0,0);
-        moveToWrapper( 9.9,-9.806,4.293,Q5.getX(),Q5.getY(),Q5.getZ(),Q5.getW());
-
-        Quaternion Q3 = eulerToQuaternion(0,90,0);
-        moveToWrapper( 9.9,-9.806,4.293,Q3.getX(),Q3.getY(),Q3.getZ(),Q3.getW());
-
-        Quaternion Q6 = eulerToQuaternion(0,0,0);
-        moveToWrapper( 9.9,-9.806,4.293,Q6.getX(),Q6.getY(),Q6.getZ(),Q6.getW());
-
-        Quaternion Q4 = eulerToQuaternion(0,0,90);
-        moveToWrapper( 9.9,-9.806,4.293,Q4.getX(),Q4.getY(),Q4.getZ(),Q4.getW());
-
         // QR
         Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
         moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
         Log.d("QR","Start to read QR");
         // Mat imageCamera = api.getMatNavCam();
+
         Mat imageCamera = croppedImage();
         String qr_str = decodeQR(imageCamera);
         StringDecode QRData = new StringDecode();
@@ -120,22 +104,37 @@ public class YourService extends KiboRpcService {
         Log.d("QR","End to read QR");
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
+        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707); // go to A'
+        Log.d("AR","Moved to A'");
+        Mat ar_pic = api.getMatNavCam();
+        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
+        Point pos_takepic = kinec_takepic.getPosition();
 
         //ARUCO
         ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
-        Point3 AR_target = new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y + ArucoModel.getPosY() ,QR_target.z + ArucoModel.getPosZ());
-        Log.d("QR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
-        Log.d("QR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
+//        ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
+        ArucoModel.estimate(ar_pic,camMatrix,dstMatrix);
+//        Point3 AR_target = new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y + ArucoModel.getPosY() ,QR_target.z + ArucoModel.getPosZ());
+        Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+//        Log.d("QR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
 
-        Point3 goal_target =  new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y  ,QR_target.z + ArucoModel.getPosZ());
-        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707);
-        Log.d("QR", "move to A-");
+        Point3 target_point = new Point3(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
+        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.x,target_point.y,target_point.z));
 
-        api.takeSnapshot();
-        Log.d("QR", "take photo");
+
+//        Point3 goal_target =  new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y  ,QR_target.z + ArucoModel.getPosZ());
+//        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707);
+//        Point pos_target = new Point(pos_takepic.getX() + ArucoModel.getPosX(), pos_takepic.getY() + ArucoModel.getPosY(), pos_takepic.getZ() + ArucoModel.getPosZ());
+        moveToWrapper(target_point.x,pos_takepic.getY(),target_point.z,0,0,-0.707,0.707);
+        Log.d("AR","Moved to target point");
+//        Log.d("QR", "move to A-");
+
         api.laserControl(true);
         Log.d("QR", "laser");
+        api.takeSnapshot();
+        Log.d("QR", "take photo");
+
+        moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707);
 
 
 
