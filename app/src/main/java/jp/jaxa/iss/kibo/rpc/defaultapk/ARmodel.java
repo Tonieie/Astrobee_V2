@@ -44,32 +44,13 @@ public class ARmodel {
     }
 
     public float getPosY() {
-//        return (float)target_pos.y *(-1.0f);
-//        return (float)target_pos.z;
         return (float)target_pos.z * (-1.0f);
     }
 
     public float getPosZ() {
-//        return (float)target_pos.z *(-1.0f);
-//        return (float) target_pos.y *(-1.0f);
         return (float)target_pos.y;
     }
 
-    public void estimateTest(Mat img, Mat camMatrix, Mat dstMatrix) {
-        long total_time = 0;
-        int loop_cnt = 50;
-        for (int i = 0; i < loop_cnt; i++) {
-            long start_time = System.currentTimeMillis();
-            estimate(img, camMatrix, dstMatrix);
-            long end_time = System.currentTimeMillis();
-            long diff_time = end_time - start_time;
-            total_time += diff_time;
-//            System.out.printf("%d: AR time : %d ms\n", i, (diff_time) * 200);
-        }
-
-
-//        System.out.printf("AR time : %d ms\n", (total_time) * 200 / loop_cnt);
-    }
 
     public void estimate(Mat img,Mat camMatrix,Mat dstMatrix) {
 

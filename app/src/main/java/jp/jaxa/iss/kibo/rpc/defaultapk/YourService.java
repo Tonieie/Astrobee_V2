@@ -95,8 +95,8 @@ public class YourService extends KiboRpcService {
         Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
         moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
         Log.d("QR","Start to read QR");
-        // Mat imageCamera = api.getMatNavCam();
 
+        // Mat imageCamera = api.getMatNavCam();
         Mat imageCamera = croppedImage();
         String qr_str = decodeQR(imageCamera);
         StringDecode QRData = new StringDecode();
@@ -112,23 +112,18 @@ public class YourService extends KiboRpcService {
 
         //ARUCO
         ARmodel ArucoModel = new ARmodel();
-//        ArucoModel.estimate(imgProc.processedImg,camMatrix,dstMatrix);
         ArucoModel.estimate(ar_pic,camMatrix,dstMatrix);
-//        Point3 AR_target = new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y + ArucoModel.getPosY() ,QR_target.z + ArucoModel.getPosZ());
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
-//        Log.d("QR", String.format("AR absolute : %.2f %.2f %.2f",AR_target.x,AR_target.y,AR_target.z));
 
         Point3 target_point = new Point3(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.x,target_point.y,target_point.z));
 
 
-//        Point3 goal_target =  new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y  ,QR_target.z + ArucoModel.getPosZ());
-//        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707);
-//        Point pos_target = new Point(pos_takepic.getX() + ArucoModel.getPosX(), pos_takepic.getY() + ArucoModel.getPosY(), pos_takepic.getZ() + ArucoModel.getPosZ());
+
         Point3 laser_offset = new Point3(-0.0572,0,0.1111);
         moveToWrapper(target_point.x + laser_offset.x,pos_takepic.getY(),target_point.z + laser_offset.z,0,0,-0.707,0.707);
         Log.d("AR","Moved to target point");
-//        Log.d("QR", "move to A-");
+
 
         api.laserControl(true);
         Log.d("QR", "laser");
