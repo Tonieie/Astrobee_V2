@@ -3,6 +3,7 @@ package jp.jaxa.iss.kibo.rpc.defaultapk;
 
 import android.util.Log;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.opencv.aruco.Aruco;
 import org.opencv.aruco.Dictionary;
 import org.opencv.core.Mat;
@@ -90,6 +91,25 @@ public class YourService extends KiboRpcService {
     protected void runPlan1(){
         api.startMission();
         setCamCalibration();
+        boolean is_collusion =  moveToKOZ(11.0f,-8.6f,5.0f,0,0,-0.707,0.707);
+        if(is_collusion){
+            Log.d("move","to QR");
+            Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
+            moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
+            Log.d("move","to QR complete");
+        }
+        else{
+            moveToWrapper( 9.815f, -9.806f, 4.293f,1,0,0,0);
+
+            Log.d("move","can't go");
+        }
+    }
+
+
+    @Override
+    protected void runPlan2(){
+        api.startMission();
+        setCamCalibration();
 
         // QR
         Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
@@ -138,11 +158,6 @@ public class YourService extends KiboRpcService {
 
 
         api.reportMissionCompletion();
-    }
-
-
-    @Override
-    protected void runPlan2(){
         // write here your plan 2
     }
 
@@ -177,6 +192,48 @@ public class YourService extends KiboRpcService {
             result = api.moveTo(point, quaternion, false);
             ++loopCounter;
         }
+    }
+
+    public boolean moveToKOZ(double pos_x, double pos_y, double pos_z,
+                              double qua_x, double qua_y, double qua_z,
+                              double qua_w){
+        boolean collusion = false;
+        final int LOOP_MAX = 2;
+        final Point point = new Point(pos_x, pos_y, pos_z);
+
+        final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
+                (float)qua_z, (float)qua_w);
+        Result result = api.moveTo(point, quaternion, false);
+
+
+//        Log.d("move", String.format("result : %s %d",result.getMessage(),result.getStatus()));
+
+        System.out.print("get message ");
+        System.out.println(result.getMessage());
+        System.out.print("get status");
+        System.out.println(result.getStatus());
+
+        int loopCounter = 0;
+        while(!result.hasSucceeded()){
+            result = api.moveTo(point, quaternion, false);
+            ++loopCounter;
+            if (result.getStatus() ==  Result.Status.EXEC_FAILED) {
+                Log.d("move", String.format("collusion = true (NULL) loop_cnt: %d", loopCounter));
+                return true;
+            }
+        }
+//        Log.d("move", String.format("collusion = true (NULL) loop_cnt: %d", loopCounter));
+
+        return false;
+
+//        int loopCounter = 0;
+//        while(!result.hasSucceeded() && loopCounter < LOOP_MAX){
+//                result = api.moveTo(point, quaternion, false);
+//                ++loopCounter;
+//        }
+
+
+
     }
 
 }
