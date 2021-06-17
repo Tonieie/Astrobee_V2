@@ -125,7 +125,8 @@ public class YourService extends KiboRpcService {
 //        Point3 goal_target =  new Point3( QR_target.x + ArucoModel.getPosX(),QR_target.y  ,QR_target.z + ArucoModel.getPosZ());
 //        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707);
 //        Point pos_target = new Point(pos_takepic.getX() + ArucoModel.getPosX(), pos_takepic.getY() + ArucoModel.getPosY(), pos_takepic.getZ() + ArucoModel.getPosZ());
-        moveToWrapper(target_point.x,pos_takepic.getY(),target_point.z,0,0,-0.707,0.707);
+        Point3 laser_offset = new Point3(-0.0572,0,0.1111);
+        moveToWrapper(target_point.x + laser_offset.x,pos_takepic.getY(),target_point.z + laser_offset.z,0,0,-0.707,0.707);
         Log.d("AR","Moved to target point");
 //        Log.d("QR", "move to A-");
 
@@ -134,7 +135,10 @@ public class YourService extends KiboRpcService {
         api.takeSnapshot();
         Log.d("QR", "take photo");
 
-        moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707);
+        moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707);
+        moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
+
+        moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
 
 
 
