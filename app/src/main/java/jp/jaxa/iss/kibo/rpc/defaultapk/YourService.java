@@ -3,12 +3,6 @@ package jp.jaxa.iss.kibo.rpc.defaultapk;
 
 import android.util.Log;
 
-import com.yanzhenjie.zbar.Config;
-import com.yanzhenjie.zbar.Image;
-import com.yanzhenjie.zbar.ImageScanner;
-import com.yanzhenjie.zbar.Symbol;
-import com.yanzhenjie.zbar.SymbolSet;
-
 import org.opencv.aruco.Aruco;
 import org.opencv.aruco.Dictionary;
 import org.opencv.core.Mat;
