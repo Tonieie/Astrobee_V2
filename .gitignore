@@ -1,6 +1,8 @@
 # OS X randomness
 .DS_Store
 
+app/build
+
 # build products
 build/
 out/
