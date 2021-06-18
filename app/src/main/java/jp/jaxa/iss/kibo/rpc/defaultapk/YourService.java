@@ -125,11 +125,11 @@ public class YourService extends KiboRpcService {
 
 
         api.laserControl(true);
-        Log.d("QR", "laser");
+        Log.d("AR", "laser");
         api.takeSnapshot();
-        Log.d("QR", "take photo");
+        Log.d("AR", "take photo");
         api.laserControl(false);
-        Log.d("QR", "laser off");
+        Log.d("AR", "laser off");
 
         moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707);  // avoid KOZ2
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
