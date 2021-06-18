@@ -115,17 +115,16 @@ public class YourService extends KiboRpcService {
         Point3 target_point = new Point3(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.x,target_point.y,target_point.z));
 
-
-
         Point3 laser_offset = new Point3(-0.0572,0,0.1111);
+
+        Log.d("move","Moving to target point");
         moveToWrapper(target_point.x + laser_offset.x,pos_takepic.getY(),target_point.z + laser_offset.z,0,0,-0.707,0.707);
-
-        Log.d("AR","Moved to target point");
-
+        Log.d("move","Moved to target point successful");
 
 
+        Log.d("AR","Laser control activate");
         api.laserControl(true);
-        Log.d("AR", "laser");
+        Log.d("AR", "laser on");
         api.takeSnapshot();
         Log.d("AR", "take photo");
         api.laserControl(false);
