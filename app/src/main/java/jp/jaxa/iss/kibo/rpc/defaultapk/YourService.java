@@ -100,6 +100,7 @@ public class YourService extends KiboRpcService {
 //        Log.d("AR","Moved to A'");
 
         moveFromQR(QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ());
+        Log.d("move", "Move to A' task accomplished");
 
         Log.d("AR","Start AR function");
 
@@ -269,10 +270,9 @@ public class YourService extends KiboRpcService {
             Log.d("move", "No collusion detected");
             Log.d("move", String.format("Start to move directly to target, KOZ Pattern : %d",koz_pattern));
 //            moveToWrapper( 9.815f, -9.806f, 4.293f,1,0,0,0);
-            moveToWrapper(qr_x , qr_y, qr_z, 0,0,-0.707,0.707);
 
         }
-        Log.d("move", "Move to A' task accomplished");
+
     }
 
     public boolean moveToKOZ(double pos_x, double pos_y, double pos_z,
