@@ -89,7 +89,7 @@ public class YourService extends KiboRpcService {
         moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
         Log.d("QR","Start to read QR");
 
-         Mat imageCamera = api.getMatNavCam();
+        Mat imageCamera = api.getMatNavCam();
         String qr_str = decodeQR(imageCamera);
         StringDecode QRData = new StringDecode();
         QRData.setString(qr_str);
@@ -208,10 +208,9 @@ public class YourService extends KiboRpcService {
 
     public void moveFromQR(int koz_pattern,double qr_x, double qr_y, double qr_z){
 
-        Log.d("move", "Start moveFromQR function");
+        Log.d("move", String.format("Start moveFromQR function pattern : %d", koz_pattern));
 
         boolean is_collusion =  moveToKOZ(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
-
         Kinematics KinecReadQR = api.getTrustedRobotKinematics();
         Point PosReadQR = KinecReadQR.getPosition();
         if(is_collusion){
