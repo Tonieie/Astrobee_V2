@@ -117,9 +117,9 @@ public class YourService extends KiboRpcService {
 
         Point3 laser_offset = new Point3(-0.0572,0,0.1111);
 
-        Log.d("move","Moving to target point");
+        Log.d("move","Moving to target point with offset");
         moveToWrapper(target_point.x + laser_offset.x,pos_takepic.getY(),target_point.z + laser_offset.z,0,0,-0.707,0.707);
-        Log.d("move","Moved to target point successful");
+        Log.d("move","Moved to target point with offset successful");
 
 
         Log.d("AR","Laser control activate");
