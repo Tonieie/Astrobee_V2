@@ -239,7 +239,7 @@ public class YourService extends KiboRpcService {
             else if(koz_pattern == 7){
                 boolean koz7_r_collusion =  moveToKOZ(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
                 if (koz7_r_collusion){
-                    Log.d("move", "Collusion detect! in pattern 7");
+                    Log.d("move", "Collusion detect! in pattern 7 going a roundabout way");
 
                     Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x, qr_y, PosReadQR.getZ()));
                     moveToWrapper(qr_x - 0.75, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
@@ -250,6 +250,7 @@ public class YourService extends KiboRpcService {
                     Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
                     moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
                 }else{
+                    Log.d("move", "No collusion detect! in pattern 7 try to get through");
 
                     Log.d("move", String.format("Start move to avoid KOZ : (%.2f + 0.6, %.2f, %.2f)", qr_x, qr_y, PosReadQR.getZ()));
                     moveToWrapper(qr_x + 0.6, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
