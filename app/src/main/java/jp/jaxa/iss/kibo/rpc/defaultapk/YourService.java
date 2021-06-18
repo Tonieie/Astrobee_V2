@@ -100,7 +100,8 @@ public class YourService extends KiboRpcService {
 //        Log.d("AR","Moved to A'");
 
         moveFromQR(QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ());
-        Log.d("move","Moved to A'");
+
+        Log.d("AR","Start AR function");
 
         Mat ar_pic = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
