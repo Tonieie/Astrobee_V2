@@ -45,40 +45,40 @@ public class YourService extends KiboRpcService {
         // HT HT HT
 
 
-//        `
-//                ``-/yNmmds/osyhy:`
-//        `sdmNMMMMMMMMMMMMMMmhs.
-//            /ydNMMMMMMMMMMMMMMMMMMMMm.
-//          `odMMMMMMMMMMMMMMMMMMMMMMMMm-`
-//          +MMMMMMMMMMMMMMMMMMMMMMMMMMMNd:
-//         .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm:-
+
+//                 `./sNNmds:osshy:`
+//              `ydmNMMMMMMMMMMMMMMmhs.
+//            :ydMMMMMMMMMMMMMMMMMMMMMm.
+//         `odMMMMMMMMMMMMMMMMMMMMMMMMd-`
+//         +MMMMMMMMMMMMMMMMMMMMMMMMMMMNd:
+//         .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm:.
 //       :-yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+
-//       yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm/
-//      `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd-
-//       `dNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMh`
-//        `hMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd`
-//        `hMMMMMMMMmyyNNNNMMMNNdddNMMMMMMMMMd
-//       :NMMMMMMMo/://---::--:/+sdMMMMMMMMs
-//       `NMMMMMNMNhssyho.``+hdyooNMMMMMMMMy
-//       .NMMMMMNMMmmmmNmmmmmNNNNNMMMMMMMMMy
+//        hNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN:
+//        `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm-
+//      `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMh`
+//       hMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd`
+//        `hMMMMMMMMmyhNMNMMMMMNmddNMMMMMMMMMd
+//       :MMMMMMMMo:://---:/---/+sdMMMMMMMMs
+//       `NMMMMMNMNhssyyo```+ydyooNMMMMMMMMy
+//       .NMMMMMNMMmddmNmmddmNNNmmMMMMMMMMMy
 //        /NMMMNddddddddddddmddddddddNMMMMm:
-//         :NMMd       ..` `-+.   `  yMMMd-
-//          :NMm       .:--//+-      yMMm`
-//           :yN.    ```--//.-.`     dN/.
-//             m+    -symhoshh/:    .Mh
-//             +N:    ``-/+/:`     `sM+
-//            .sMNs:.            -ydMMy.
-//          .omMMMMMmo.`      `:yNMMMMMm/`
-//  ```.-/oyNMMMMMMMMMNhysoooshdhysoooooo/-`
-//        oyhdNMMMMMMMMMMMMmsddhyo+/:.```....`..........```
-//        MMMMMMMMMMMMMMdds/```...----.-://+o//+ossysso//::`
-//MMMMMMMMMMMNh+...----:::+ossssyhddo--/oshhyyyso+/`
-//MMMMMMMMMm+.``.-://:/sooshsooydhdh+///ooosyhdhhy:`
-//MMMMMMMMy. ``.:/:::/+yyhdo:/+++oossyyysyhdmhdhhy/`
-//MMMMMMMM-   `:ys--:/o+oss+ossysyyhyyyhhyhdhyoo:```
-//        MMMMMMMMs````-+/-:/oyhyhyyyddhhhhyyhhys+s/..``-+yd
-//MMMMMMMMMdo-``..--:ohddmdhhhddhy+///::-.-:+shNMMMM
-//MMMMMMMMMMMMNho/:----:::------..--/+sydNMMMMMMMMMM
+//         /NMMd       .-` `-+.   `  yMMMm-
+//          /NMm       .:--//+-      yMMN`
+//           :hM`       `..-.        dN+-
+//             m/    .`/hhyhmy++    .Mh
+//             +m-   --/+:+///-: ` `sM+
+//            `sMNo:`            .shMMy.
+//          `+mMMMMMm+.       `:yNMMMMMm:`
+//   ``..:+ymMMMMMMMMMNhso++oymMMMMMMMMMMdy+:.``
+//+shdmNMMMMMMMMMMMNymNMMMMMMMMMMMMMMMMMMMMMMMmdhyo/
+//MMMMMMMMMMMMMMmMMN/`-/ydNNNNmmmNMMMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMM+Ndhh/     ```   :MyNMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMdMh              :MNMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMMMMy`           .mMMMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMMMMMy`        `sNMMMMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMMMMMMNs.     -NMMMMMMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMMMMMMMMMo   sMMMMMMMMMMMMMMMMMMMMMMM
+//MMMMMMMMMMMMMMMMMMMMMMMd:yMMMMMMMMMMMMMMMMMMMMMMMM
 
         api.startMission();
         setCamCalibration();
