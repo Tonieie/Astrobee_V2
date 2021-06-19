@@ -24,27 +24,11 @@ import jp.jaxa.iss.kibo.rpc.api.KiboRpcService;
 
 public class YourService extends KiboRpcService {
 
-    private static int dictID = Aruco.DICT_5X5_250;
-    private static Mat ids;
-    private static ArrayList<Mat> corners;
-    private static Dictionary dict;
-    private static Scalar borderColor;
-
     private static camera_params camparams;
     private static Mat camMatrix;
     private static Mat dstMatrix;
-    private static float markerSize;
-
-    private static Mat rvecs;
-    private static Mat tvecs;
-    private static Mat mean_rvecs;
-    private static Mat rotationMatrix;
-
-    private static Mat undistort_img;
 
     private static zbarQR zbarQR_obj;
-
-    private static imgProcessing imgProc;
 
     public static void setCamCalibration() {
         camparams = new camera_params();
@@ -52,38 +36,6 @@ public class YourService extends KiboRpcService {
 
         camMatrix=camparams.getCamMatrix();
         dstMatrix=camparams.getDistortionMat();
-    }
-    private Mat croppedImage(){
-        Mat qr_img = api.getMatNavCam();
-
-        imgProc = new imgProcessing();
-        imgProc.findRectContours(qr_img);
-
-        Log.d("QR","Contours complete");
-        return imgProc.sharpenImg;
-    }
-
-    private Quaternion eulerToQuaternion(double yaw_degree, double pitch_degree, double roll_degree){
-
-        double yaw = Math.toRadians(yaw_degree); //radian = degree*PI/180
-        double pitch = Math.toRadians(pitch_degree);
-        double roll = Math.toRadians(roll_degree);
-
-        double cy = Math.cos(yaw * 0.5);
-        double sy = Math.sin(yaw * 0.5);
-        double cp = Math.cos(pitch * 0.5);
-        double sp = Math.sin(pitch * 0.5);
-        double cr = Math.cos(roll * 0.5);
-        double sr = Math.sin(roll * 0.5);
-
-        double qx = sr * cp * cy - cr * sp * sy;
-        double qy = cr * sp * cy + sr * cp * sy;
-        double qz = cr * cp * sy - sr * sp * cy;
-        double qw = cr * cp * cy + sr * sp * sy;
-
-        Quaternion quaternion = new Quaternion((float)qx, (float)qy, (float)qz, (float)qw);
-
-        return quaternion;
     }
 
     @Override
@@ -125,15 +77,18 @@ public class YourService extends KiboRpcService {
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ());
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);
+        Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
 //        moveToWrapper(pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ(),rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
-        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
-        Log.d("AR","Offseted");
+//        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
+//        Log.d("AR","Offseted");
+
+
 
 
         api.laserControl(true);
@@ -202,7 +157,7 @@ public class YourService extends KiboRpcService {
         Point u = new Point(0,u_y,u_z);
 
         double qw = Math.cos(rot_angle/2);
-        double qx = Math.sin(rot_angle/2) * u.getX();
+        double qx = 0;
         double qy = Math.sin(rot_angle/2) * u.getY();
         double qz = Math.sin(rot_angle/2) * u.getZ();
 
