@@ -63,13 +63,6 @@ public class YourService extends KiboRpcService {
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
         //AR
-//        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707); // go to A'
-//        Log.d("AR","Moved to A'");
-//        Mat ar_pic = api.getMatNavCam();
-//        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
-//        Point pos_takepic = kinec_takepic.getPosition();
-
-
         ARmodel ArucoModel = new ARmodel();
         ArucoModel.estimate(imageCamera,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
@@ -77,7 +70,7 @@ public class YourService extends KiboRpcService {
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
@@ -88,9 +81,7 @@ public class YourService extends KiboRpcService {
 //        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
 //        Log.d("AR","Offseted");
 
-
-
-
+        //Laser Control
         api.laserControl(true);
         Log.d("QR", "laser");
         api.takeSnapshot();
