@@ -56,31 +56,31 @@ public class YourService extends KiboRpcService {
         Log.d("QR","End to read QR");
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
-
-        moveToTarget(QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ());
-        Log.d("move", "Move to A' task accomplished");
-
+        //ARUCO
         Log.d("AR","Start AR function");
 
-        Mat ar_pic = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
+        Log.d("AR", String.format("pos_takepic : %.3f %.3f %.3f",pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ()));
 
-        //ARUCO
+
         ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(ar_pic,camMatrix,dstMatrix);
+        ArucoModel.estimate(imageCamera,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer // Used in pattern1
+//        Point target_relative = new Point(ArucoModel.getPosX() - 0.0422,ArucoModel.getPosY() - 0.1177,ArucoModel.getPosZ() - 0.0826); //offset from NavCam to Astrobee center point // Used in pattern2
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
+//        relativeMoveToWrapper(0.0572,-0.1302,-0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()); //offset from Astrobee center point to LaserPointer // Used in pattern2
+//        Log.d("AR","Aligned by ref laser");
 
 
         Log.d("AR","Laser control activate");
@@ -92,9 +92,7 @@ public class YourService extends KiboRpcService {
         Log.d("AR", "laser off");
 
 
-
-        Point AvoidKOZ2 = new Point(10.505,-9,4.50);
-        moveOffTarget(QRData.getPattern(),AvoidKOZ2.getX(),AvoidKOZ2.getY(),AvoidKOZ2.getZ()); // avoid KOZ2
+        moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
 
         moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
@@ -155,126 +153,6 @@ public class YourService extends KiboRpcService {
         }
     }
 
-    public void moveOffTarget(int koz_pattern,double px, double py, double pz){
-        Log.d("move", String.format("Start move form A' to B"));
-
-        Kinematics KinecTarget = api.getTrustedRobotKinematics();
-        Point PosTarget = KinecTarget.getPosition();
-        if((koz_pattern == 1) || (koz_pattern == 2) || (koz_pattern == 3) || (koz_pattern == 4) || (koz_pattern == 8) ){
-            Log.d("move", String.format("Start move to avoid KOZ : (%.2f, %.2f, %.2f)", PosTarget.getX(), PosTarget.getY(), pz));
-            moveToWrapper(PosTarget.getX(), PosTarget.getY(), pz, 0,0,-0.707,0.707);
-        }
-        else if((koz_pattern == 5) || (koz_pattern == 6)){
-            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", px, PosTarget.getY(), PosTarget.getZ()));
-            moveToWrapper(px, PosTarget.getY(), PosTarget.getZ(), 0,0,-0.707,0.707);
-        }
-        else if(koz_pattern == 7){
-            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", PosTarget.getX() + 0.6f, PosTarget.getY(), PosTarget.getZ()));
-            moveToWrapper(PosTarget.getX() +0.6, PosTarget.getY(), PosTarget.getZ(), 0,0,-0.707,0.707);
-            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", PosTarget.getX() +0.6f, PosTarget.getY(), pz));
-            moveToWrapper(PosTarget.getX() +0.6, PosTarget.getY(), pz, 0,0,-0.707,0.707);
-
-        }
-        moveToWrapper(px, py, pz, 0,0,-0.707,0.707);
-        Log.d("move", String.format("avoid KOZ complete", px, py, pz));
-
-    }
-    public void moveToTarget(int koz_pattern,double qr_x, double qr_y, double qr_z){
-
-        Log.d("move", String.format("Start moveFromQR function pattern : %d", koz_pattern));
-
-        boolean is_collusion =  moveToKOZ(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
-        Kinematics KinecReadQR = api.getTrustedRobotKinematics();
-        Point PosReadQR = KinecReadQR.getPosition();
-        if(is_collusion){
-            Log.d("move", "Collusion detected!");
-            Log.d("move", String.format("Move by offset to A', KOZ Pattern : %d",koz_pattern));
-
-//            String.format("Start move pattern : %d",koz_pattern)
-            if((koz_pattern == 1) || (koz_pattern == 2) || (koz_pattern == 3) || (koz_pattern == 4) || (koz_pattern == 8) ){
-                Log.d("move", String.format("Start move to avoid KOZ : (%.2f, %.2f, %.2f)", qr_x, qr_y, PosReadQR.getZ()));
-                moveToWrapper(qr_x, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
-
-                Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
-            }
-            else if((koz_pattern == 5) || (koz_pattern == 6)){
-                Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.6, %.2f, %.2f)", qr_x, qr_y, PosReadQR.getZ()));
-                moveToWrapper(qr_x - 0.6, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
-
-                Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.6, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                moveToWrapper(qr_x - 0.6, qr_y, qr_z, 0,0,-0.707,0.707);
-
-                Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
-            }
-            else if(koz_pattern == 7){
-                Log.d("move", String.format("Check move to avoid KOZ : (%.2f , %.2f, %.2f)", qr_x + 0.6, qr_y, PosReadQR.getZ()));
-                boolean koz7_r_collusion =  moveToKOZ(qr_x + 0.6, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
-                if (koz7_r_collusion){
-                    Log.d("move", "Collusion detect! in pattern 7 going a roundabout way");
-
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", qr_x - 0.75, qr_y, PosReadQR.getZ()));
-                    moveToWrapper(qr_x - 0.75, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
-
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", qr_x - 0.75, qr_y, qr_z + 0.6));
-                    moveToWrapper(qr_x - 0.75, qr_y, qr_z + 0.6, 0,0,-0.707,0.707);
-
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", qr_x, qr_y, qr_z + 0.6));
-                    moveToWrapper(qr_x, qr_y , qr_z + 0.6, 0,0,-0.707,0.707);
-
-                    Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
-                }else{
-                    Log.d("move", "No collusion detect! in pattern 7 try to get through");
-
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f + 0.6, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x + 0.6, qr_y, qr_z, 0,0,-0.707,0.707);
-
-                    Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x , qr_y, qr_z, 0,0,-0.707,0.707);
-                }
-
-            }
-
-
-
-        }
-        else{
-            Log.d("move", "No collusion detected");
-            Log.d("move", String.format("Start to move directly to target, KOZ Pattern : %d",koz_pattern));
-
-        }
-
-    }
-
-    public boolean moveToKOZ(double pos_x, double pos_y, double pos_z,
-                              double qua_x, double qua_y, double qua_z,
-                              double qua_w){
-
-        final int LOOP_MAX = 5;
-        final Point point = new Point(pos_x, pos_y, pos_z);
-
-        final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
-                (float)qua_z, (float)qua_w);
-        Result result = api.moveTo(point, quaternion, false);
-
-
-        int loopCounter = 0;
-        while(!result.hasSucceeded() && loopCounter < LOOP_MAX ){
-            result = api.moveTo(point, quaternion, false);
-            ++loopCounter;
-            if (result.getStatus() ==  Result.Status.EXEC_FAILED ) {
-                Log.d("move", String.format("collusion = true (NULL) loop_cnt: %d", loopCounter));
-                return true;
-            }
-        }
-
-        return false;
-
-
-
-    }
 
     public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
                                       double qua_x, double qua_y, double qua_z,

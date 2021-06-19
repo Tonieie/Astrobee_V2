@@ -58,7 +58,7 @@ public class ARmodel {
         dict = Aruco.getPredefinedDictionary(dictID);
         Aruco.detectMarkers(img ,dict ,corners,ids);
 
-        borderColor = new Scalar (255.0, 0.0, 0.0);
+//        borderColor = new Scalar (255.0, 0.0, 0.0);
 
         if(ids.size().height>0) {
 
