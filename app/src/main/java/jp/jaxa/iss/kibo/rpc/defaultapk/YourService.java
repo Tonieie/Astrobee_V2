@@ -141,16 +141,16 @@ public class YourService extends KiboRpcService {
     {
         double target_dist = Math.sqrt(target.getX() * target.getX() + target.getY() * target.getY() + target.getZ() * target.getZ());
 
-        Point v = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
-        double rot_angle = Math.acos(v.getX());
-        double u_y = v.getZ() * - 1.0f; //i cross k
-        double u_z = v.getY(); //i cross j
-        Point u = new Point(0,u_y,u_z);
+        Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
+        double rot_angle = Math.acos(cosine_dir.getX());
+        double u_y = cosine_dir.getZ() * - 1.0f; //i cross k
+        double u_z = cosine_dir.getY(); //i cross j
+        Point rot_axis = new Point(0,u_y,u_z);
 
         double qw = Math.cos(rot_angle/2);
         double qx = 0;
-        double qy = Math.sin(rot_angle/2) * u.getY();
-        double qz = Math.sin(rot_angle/2) * u.getZ();
+        double qy = Math.sin(rot_angle/2) * rot_axis.getY();
+        double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
 
         return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
     }
