@@ -245,7 +245,10 @@ public class YourService extends KiboRpcService {
                     moveToWrapper(qr_x - 0.75, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
 
                     Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x - 0.75, qr_y, qr_z, 0,0,-0.707,0.707);
+                    moveToWrapper(qr_x - 0.75, qr_y, qr_z - 0.6, 0,0,-0.707,0.707);
+
+                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f - 0.6, %.2f)", qr_x, qr_y, qr_z));
+                    moveToWrapper(qr_x, qr_y , qr_z - 0.6, 0,0,-0.707,0.707);
 
                     Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
                     moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
