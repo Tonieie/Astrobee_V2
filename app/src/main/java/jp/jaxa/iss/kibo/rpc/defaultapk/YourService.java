@@ -41,6 +41,8 @@ public class YourService extends KiboRpcService {
 
     @Override
     protected void runPlan1(){
+        // HT HT HT
+        
         api.startMission();
         setCamCalibration();
 
@@ -71,16 +73,16 @@ public class YourService extends KiboRpcService {
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer // Used in pattern1
-//        Point target_relative = new Point(ArucoModel.getPosX() - 0.0422,ArucoModel.getPosY() - 0.1177,ArucoModel.getPosZ() - 0.0826); //offset from NavCam to Astrobee center point // Used in pattern2
+//        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer // Used in pattern1
+        Point target_relative = new Point(ArucoModel.getPosX() - 0.0422,ArucoModel.getPosY() - 0.1177,ArucoModel.getPosZ() - 0.0826); //offset from NavCam to Astrobee center point // Used in pattern2
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
-//        relativeMoveToWrapper(0.0572,-0.1302,-0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()); //offset from Astrobee center point to LaserPointer // Used in pattern2
-//        Log.d("AR","Aligned by ref laser");
+        relativeMoveToWrapper(0.0572,-0.1302,-0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()); //offset from Astrobee center point to LaserPointer // Used in pattern2
+        Log.d("AR","Aligned by ref laser");
 
 
         Log.d("AR","Laser control activate");
