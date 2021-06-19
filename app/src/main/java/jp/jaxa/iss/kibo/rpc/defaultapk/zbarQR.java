@@ -19,7 +19,7 @@ public class zbarQR {
 	public String qrCodeString = null;
 
 	public void scanQRImage(Mat img){
-		int pixel_size = img.width() * img.height()*3;
+		int pixel_size = img.width() * img.height();
 		Log.d("QR","pixel size " + pixel_size);
 		byte[] pixel = new byte[pixel_size];
 		img.get(0,0,pixel);
