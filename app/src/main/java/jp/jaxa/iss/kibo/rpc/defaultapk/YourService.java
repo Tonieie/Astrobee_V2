@@ -45,7 +45,7 @@ public class YourService extends KiboRpcService {
         // HT HT HT
 
 
-
+/**
 //                 `./sNNmds:osshy:`
 //              `ydmNMMMMMMMMMMMMMMmhs.
 //            :ydMMMMMMMMMMMMMMMMMMMMMm.
@@ -79,7 +79,7 @@ public class YourService extends KiboRpcService {
 //MMMMMMMMMMMMMMMMMMMNs.     -NMMMMMMMMMMMMMMMMMMMMM
 //MMMMMMMMMMMMMMMMMMMMMMo   sMMMMMMMMMMMMMMMMMMMMMMM
 //MMMMMMMMMMMMMMMMMMMMMMMd:yMMMMMMMMMMMMMMMMMMMMMMMM
-
+ */
         api.startMission();
         setCamCalibration();
 
