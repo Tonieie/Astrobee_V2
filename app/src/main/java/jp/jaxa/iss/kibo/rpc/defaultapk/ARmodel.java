@@ -15,7 +15,7 @@ import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
 import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
+
 
 public class ARmodel {
 
@@ -30,7 +30,7 @@ public class ARmodel {
 
     private static Mat rvecs;
     private static Mat tvecs;
-    private static Mat mean_rvecs;
+
     private static Mat rotationMatrix;
 
     private static Point3 target_pos=new Point3();
@@ -39,9 +39,7 @@ public class ARmodel {
         return ids.get(index,0)[0] == id;
     }
 
-    public float getPosX() {
-        return (float)target_pos.x;
-    }
+    public float getPosX() { return (float)target_pos.x;}
 
     public float getPosY() {
         return (float)target_pos.z * (-1.0f);
@@ -94,7 +92,7 @@ public class ARmodel {
 
 
                 float x_offset = 0.1125f;
-                float y_offset = 0.0425f;
+                float y_offset = 0.0415f;
 
                 if(isID(i,1)) {
                     x_offset *= -1;
@@ -111,36 +109,12 @@ public class ARmodel {
                 target_pos.y=target_pos.y+pos_y + y_offset;
                 target_pos.z=target_pos.z+pos_z;
 
-
-//                String AR_position = String.format("id %s\t(%.2f,%.2f,%.2f)m",(int)ids.get(i,0)[0],pos_x,pos_y,pos_z);
-
-
-//				convert rvec to rotation matrix
-                Calib3d.Rodrigues(rvec, rot);
-
-                quaternion orientation = new quaternion();
-
-                orientation.fromRotationMatrix(rot);
-                orientation.toEuler();
-//				System.out.println(rot.dump());
-//				System.out.printf("orien : %.3f %.3f %.3f %.3f\n",orientation.x,orientation.y,orientation.z,orientation.w);
-//				System.out.printf("orien : %.3f %.3f %.3f\n",orientation.roll,orientation.pitch,orientation.yaw);
-
-                //System.out.println((int)ids.get(i,0)[0]);
-
-//				System.out.println(AR_position);
             }
-
-//			System.out.printf("ID counting: %d\n",id_cnt);
 
             target_pos.x=target_pos.x/id_cnt;
             target_pos.y=target_pos.y/id_cnt;
             target_pos.z=target_pos.z/id_cnt;
 
-
-//			String target_position = String.format("(%.2f,%.2f,%.2f)m",target_pos.x,target_pos.y,target_pos.z);
-
-//			System.out.printf("center\t%s\n",target_position);
         }
     }
 }

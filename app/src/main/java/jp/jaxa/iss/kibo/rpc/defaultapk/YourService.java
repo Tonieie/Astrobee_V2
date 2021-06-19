@@ -25,27 +25,11 @@ import jp.jaxa.iss.kibo.rpc.api.KiboRpcService;
 
 public class YourService extends KiboRpcService {
 
-    private static int dictID = Aruco.DICT_5X5_250;
-    private static Mat ids;
-    private static ArrayList<Mat> corners;
-    private static Dictionary dict;
-    private static Scalar borderColor;
-
     private static camera_params camparams;
     private static Mat camMatrix;
     private static Mat dstMatrix;
-    private static float markerSize;
-
-    private static Mat rvecs;
-    private static Mat tvecs;
-    private static Mat mean_rvecs;
-    private static Mat rotationMatrix;
-
-    private static Mat undistort_img;
 
     private static zbarQR zbarQR_obj;
-
-
 
     public static void setCamCalibration() {
         camparams = new camera_params();
@@ -53,30 +37,6 @@ public class YourService extends KiboRpcService {
 
         camMatrix=camparams.getCamMatrix();
         dstMatrix=camparams.getDistortionMat();
-    }
-
-
-    private Quaternion eulerToQuaternion(double yaw_degree, double pitch_degree, double roll_degree){
-
-        double yaw = Math.toRadians(yaw_degree); //radian = degree*PI/180
-        double pitch = Math.toRadians(pitch_degree);
-        double roll = Math.toRadians(roll_degree);
-
-        double cy = Math.cos(yaw * 0.5);
-        double sy = Math.sin(yaw * 0.5);
-        double cp = Math.cos(pitch * 0.5);
-        double sp = Math.sin(pitch * 0.5);
-        double cr = Math.cos(roll * 0.5);
-        double sr = Math.sin(roll * 0.5);
-
-        double qx = sr * cp * cy - cr * sp * sy;
-        double qy = cr * sp * cy + sr * cp * sy;
-        double qz = cr * cp * sy - sr * sp * cy;
-        double qw = cr * cp * cy + sr * sp * sy;
-
-        Quaternion quaternion = new Quaternion((float)qx, (float)qy, (float)qz, (float)qw);
-
-        return quaternion;
     }
 
     @Override
@@ -96,10 +56,8 @@ public class YourService extends KiboRpcService {
         Log.d("QR","End to read QR");
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
-//        moveToWrapper( QRData.getPosX(),QRData.getPosY(),QRData.getPosZ(),0,0,-0.707,0.707); // go to A'
-//        Log.d("AR","Moved to A'");
 
-        moveFromQR(QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ());
+        moveToTarget(QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ());
         Log.d("move", "Move to A' task accomplished");
 
         Log.d("AR","Start AR function");
@@ -113,14 +71,16 @@ public class YourService extends KiboRpcService {
         ArucoModel.estimate(ar_pic,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
-        Point3 target_point = new Point3(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
-        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.x,target_point.y,target_point.z));
+        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
+        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point3 laser_offset = new Point3(-0.0572,0,0.1111);
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer
+        Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
+        Quaternion rot_qua = alignX(target_relative);
+        Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
-        Log.d("move","Moving to target point with offset");
-        moveToWrapper(target_point.x + laser_offset.x,pos_takepic.getY(),target_point.z + laser_offset.z,0,0,-0.707,0.707);
-        Log.d("move","Moved to target point with offset successful");
+        relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
+        Log.d("AR","Aligned");
 
 
         Log.d("AR","Laser control activate");
@@ -131,7 +91,10 @@ public class YourService extends KiboRpcService {
         api.laserControl(false);
         Log.d("AR", "laser off");
 
-        moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707);  // avoid KOZ2
+
+
+        Point AvoidKOZ2 = new Point(10.505,-9,4.50);
+        moveOffTarget(QRData.getPattern(),AvoidKOZ2.getX(),AvoidKOZ2.getY(),AvoidKOZ2.getZ()); // avoid KOZ2
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
 
         moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
@@ -145,26 +108,11 @@ public class YourService extends KiboRpcService {
     @Override
     protected void runPlan2(){
 
-        // write here your plan 2
     }
 
     @Override
     protected void runPlan3(){
-        // write here your plan 3
-//        api.startMission();
-//        setCamCalibration();
-//        boolean is_collusion =  moveToKOZ(11.0f,-8.6f,5.0f,0,0,-0.707,0.707);
-//        if(is_collusion){
-//            Log.d("move","to QR");
-//            Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
-//            moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
-//            Log.d("move","to QR complete");
-//        }
-//        else{
-//            moveToWrapper( 9.815f, -9.806f, 4.293f,1,0,0,0);
-//
-//            Log.d("move","can't go");
-//        }
+
     }
 
     public String decodeQR(Mat qr_img)
@@ -207,7 +155,29 @@ public class YourService extends KiboRpcService {
         }
     }
 
-    public void moveFromQR(int koz_pattern,double qr_x, double qr_y, double qr_z){
+    public void moveOffTarget(int koz_pattern,double px, double py, double pz){
+        Kinematics KinecTarget = api.getTrustedRobotKinematics();
+        Point PosTarget = KinecTarget.getPosition();
+        if((koz_pattern == 1) || (koz_pattern == 2) || (koz_pattern == 3) || (koz_pattern == 4) || (koz_pattern == 8) ){
+            Log.d("move", String.format("Start move to avoid KOZ : (%.2f, %.2f, %.2f)", PosTarget.getX(), PosTarget.getY(), pz));
+            moveToWrapper(PosTarget.getX(), PosTarget.getY(), pz, 0,0,-0.707,0.707);
+        }
+        else if((koz_pattern == 5) || (koz_pattern == 6)){
+            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", px, PosTarget.getY(), PosTarget.getZ()));
+            moveToWrapper(px, PosTarget.getY(), PosTarget.getZ(), 0,0,-0.707,0.707);
+        }
+        else if(koz_pattern == 7){
+            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", PosTarget.getX() + 0.6f, PosTarget.getY(), PosTarget.getZ()));
+            moveToWrapper(PosTarget.getX() +0.6, PosTarget.getY(), PosTarget.getZ(), 0,0,-0.707,0.707);
+            Log.d("move", String.format("Start move to avoid KOZ : (%.2f , %.2f, %.2f)", PosTarget.getX() +0.6f, PosTarget.getY(), pz));
+            moveToWrapper(PosTarget.getX() +0.6, PosTarget.getY(), pz, 0,0,-0.707,0.707);
+
+        }
+        moveToWrapper(px, py, pz, 0,0,-0.707,0.707);
+        Log.d("move", String.format("avoid KOZ complete", px, py, pz));
+
+    }
+    public void moveToTarget(int koz_pattern,double qr_x, double qr_y, double qr_z){
 
         Log.d("move", String.format("Start moveFromQR function pattern : %d", koz_pattern));
 
@@ -237,18 +207,18 @@ public class YourService extends KiboRpcService {
                 moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
             }
             else if(koz_pattern == 7){
-                boolean koz7_r_collusion =  moveToKOZ(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
+                boolean koz7_r_collusion =  moveToKOZ(qr_x + 0.6, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
                 if (koz7_r_collusion){
                     Log.d("move", "Collusion detect! in pattern 7 going a roundabout way");
 
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x, qr_y, PosReadQR.getZ()));
+                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x - 0.75, qr_y, PosReadQR.getZ()));
                     moveToWrapper(qr_x - 0.75, qr_y, PosReadQR.getZ(), 0,0,-0.707,0.707);
 
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x - 0.75, qr_y, qr_z - 0.6, 0,0,-0.707,0.707);
+                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f, %.2f)", qr_x - 0.75, qr_y, qr_z + 0.6));
+                    moveToWrapper(qr_x - 0.75, qr_y, qr_z + 0.6, 0,0,-0.707,0.707);
 
-                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f - 0.6, %.2f)", qr_x, qr_y, qr_z));
-                    moveToWrapper(qr_x, qr_y , qr_z - 0.6, 0,0,-0.707,0.707);
+                    Log.d("move", String.format("Start move to avoid KOZ : (%.2f - 0.75, %.2f - 0.6, %.2f)", qr_x, qr_y, qr_z + 0.6));
+                    moveToWrapper(qr_x, qr_y , qr_z + 0.6, 0,0,-0.707,0.707);
 
                     Log.d("move", String.format("Move to A' : (%.2f, %.2f, %.2f)", qr_x, qr_y, qr_z));
                     moveToWrapper(qr_x, qr_y, qr_z, 0,0,-0.707,0.707);
@@ -273,7 +243,6 @@ public class YourService extends KiboRpcService {
         else{
             Log.d("move", "No collusion detected");
             Log.d("move", String.format("Start to move directly to target, KOZ Pattern : %d",koz_pattern));
-//            moveToWrapper( 9.815f, -9.806f, 4.293f,1,0,0,0);
 
         }
 
@@ -289,14 +258,7 @@ public class YourService extends KiboRpcService {
         final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
                 (float)qua_z, (float)qua_w);
         Result result = api.moveTo(point, quaternion, false);
-
-
-//        Log.d("move", String.format("result : %s %d",result.getMessage(),result.getStatus()));
-
-        System.out.print("get message ");
-        System.out.println(result.getMessage());
-        System.out.print("get status");
-        System.out.println(result.getStatus());
+        
 
         int loopCounter = 0;
         while(!result.hasSucceeded() && loopCounter < LOOP_MAX ){
@@ -307,18 +269,45 @@ public class YourService extends KiboRpcService {
                 return true;
             }
         }
-//        Log.d("move", String.format("collusion = true (NULL) loop_cnt: %d", loopCounter));
 
         return false;
 
-//        int loopCounter = 0;
-//        while(!result.hasSucceeded() && loopCounter < LOOP_MAX){
-//                result = api.moveTo(point, quaternion, false);
-//                ++loopCounter;
-//        }
 
 
+    }
 
+    public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
+                                      double qua_x, double qua_y, double qua_z,
+                                      double qua_w){
+        final int LOOP_MAX = 2;
+        final Point point = new Point(pos_x, pos_y, pos_z);
+
+        final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
+                (float)qua_z, (float)qua_w);
+        Result result = api.relativeMoveTo(point, quaternion, false);
+        int loopCounter = 0;
+        while(!result.hasSucceeded() && loopCounter < LOOP_MAX){
+            result = api.relativeMoveTo(point, quaternion, false);
+            ++loopCounter;
+        }
+    }
+
+    public Quaternion alignX(Point target)
+    {
+        double target_dist = Math.sqrt(target.getX() * target.getX() + target.getY() * target.getY() + target.getZ() * target.getZ());
+
+        Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
+        double rot_angle = Math.acos(cosine_dir.getX());
+        double u_y = cosine_dir.getZ() * - 1.0f; //i cross k
+        double u_z = cosine_dir.getY(); //i cross j
+        Point rot_axis = new Point(0,u_y,u_z);
+
+        double qw = Math.cos(rot_angle/2);
+        double qx = 0;
+        double qy = Math.sin(rot_angle/2) * rot_axis.getY();
+        double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
+
+        return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
     }
 
 }
