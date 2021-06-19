@@ -1,6 +1,7 @@
 package jp.jaxa.iss.kibo.rpc.defaultapk;
 
 
+import android.content.ServiceConnection;
 import android.util.Log;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -42,7 +43,43 @@ public class YourService extends KiboRpcService {
     @Override
     protected void runPlan1(){
         // HT HT HT
-        
+
+
+//        `
+//                ``-/yNmmds/osyhy:`
+//        `sdmNMMMMMMMMMMMMMMmhs.
+//            /ydNMMMMMMMMMMMMMMMMMMMMm.
+//          `odMMMMMMMMMMMMMMMMMMMMMMMMm-`
+//          +MMMMMMMMMMMMMMMMMMMMMMMMMMMNd:
+//         .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm:-
+//       :-yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+
+//       yNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm/
+//      `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd-
+//       `dNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMh`
+//        `hMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd`
+//        `hMMMMMMMMmyyNNNNMMMNNdddNMMMMMMMMMd
+//       :NMMMMMMMo/://---::--:/+sdMMMMMMMMs
+//       `NMMMMMNMNhssyho.``+hdyooNMMMMMMMMy
+//       .NMMMMMNMMmmmmNmmmmmNNNNNMMMMMMMMMy
+//        /NMMMNddddddddddddmddddddddNMMMMm:
+//         :NMMd       ..` `-+.   `  yMMMd-
+//          :NMm       .:--//+-      yMMm`
+//           :yN.    ```--//.-.`     dN/.
+//             m+    -symhoshh/:    .Mh
+//             +N:    ``-/+/:`     `sM+
+//            .sMNs:.            -ydMMy.
+//          .omMMMMMmo.`      `:yNMMMMMm/`
+//  ```.-/oyNMMMMMMMMMNhysoooshdhysoooooo/-`
+//        oyhdNMMMMMMMMMMMMmsddhyo+/:.```....`..........```
+//        MMMMMMMMMMMMMMdds/```...----.-://+o//+ossysso//::`
+//MMMMMMMMMMMNh+...----:::+ossssyhddo--/oshhyyyso+/`
+//MMMMMMMMMm+.``.-://:/sooshsooydhdh+///ooosyhdhhy:`
+//MMMMMMMMy. ``.:/:::/+yyhdo:/+++oossyyysyhdmhdhhy/`
+//MMMMMMMM-   `:ys--:/o+oss+ossysyyhyyyhhyhdhyoo:```
+//        MMMMMMMMs````-+/-:/oyhyhyyyddhhhhyyhhys+s/..``-+yd
+//MMMMMMMMMdo-``..--:ohddmdhhhddhy+///::-.-:+shNMMMM
+//MMMMMMMMMMMMNho/:----:::------..--/+sydNMMMMMMMMMM
+
         api.startMission();
         setCamCalibration();
 
@@ -82,7 +119,7 @@ public class YourService extends KiboRpcService {
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
         relativeMoveToWrapper(0.0572,-0.1302,-0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()); //offset from Astrobee center point to LaserPointer // Used in pattern2
-        Log.d("AR","Aligned by ref laser");
+        Log.d("AR","Aligned by ref laser"); // Used in pattern2
 
 
         Log.d("AR","Laser control activate");
@@ -189,6 +226,8 @@ public class YourService extends KiboRpcService {
 
         return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
     }
+
+
 
 }
 
