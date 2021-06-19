@@ -3,13 +3,8 @@ package jp.jaxa.iss.kibo.rpc.defaultapk;
 
 import android.util.Log;
 
-import org.opencv.aruco.Aruco;
-import org.opencv.aruco.Dictionary;
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
 import org.opencv.core.Point3;
-
-import java.util.ArrayList;
 
 import gov.nasa.arc.astrobee.Kinematics;
 import gov.nasa.arc.astrobee.Result;
@@ -44,8 +39,7 @@ public class YourService extends KiboRpcService {
         setCamCalibration();
 
         // QR
-        Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
-        moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
+        moveToWrapper( 11.21f, -9.8f, 4.79,0,0,-0.707,0.707);
         Log.d("QR","Start to read QR");
 
         Mat imageCamera = api.getMatNavCam();
