@@ -39,15 +39,27 @@ public class YourService extends KiboRpcService {
         setCamCalibration();
 
         // QR
-        moveToWrapper( 11.21f, -9.8f, 4.79,0,0,-0.707,0.707);
-        Log.d("QR","Start to read QR");
-
-        Mat imageCamera = api.getMatNavCam();
-        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
-        Point pos_takepic = kinec_takepic.getPosition();
+        Mat imageCamera = new Mat();
+        Point pos_takepic = new Point();
 
         zbarQR_obj = new zbarQR();
-        zbarQR_obj.scanQRImage(imageCamera);
+        float qr_offset = 0.1f;
+        int qr_attemp = 0;
+
+        while(zbarQR_obj.qrCodeString == null)
+        {
+            moveToWrapper( 11.11f + qr_offset , -9.8f, 4.79,0,0,-0.707,0.707);
+            imageCamera = api.getMatNavCam();
+            Kinematics kinec_takepic = api.getTrustedRobotKinematics();
+            pos_takepic = kinec_takepic.getPosition();
+
+            qr_attemp++;
+            Log.d("QR",String.format("Start to read QR : %d",qr_attemp));
+            zbarQR_obj.scanQRImage(imageCamera);
+
+            qr_offset *= -1;
+        }
+
         Log.d("QR","readed : " + zbarQR_obj.qrCodeString);
         api.sendDiscoveredQR(zbarQR_obj.qrCodeString);      //scan QR code
 
@@ -97,29 +109,6 @@ public class YourService extends KiboRpcService {
     protected void runPlan3(){
         // write here your plan 3
     }
-
-    public String decodeQR(Mat qr_img)
-    {
-        String decoded = null;
-        int loopCounter = 0;
-        float x_offset = 0.1f;
-        while (decoded == null){
-            loopCounter++;
-            zbarQR_obj = new zbarQR();
-            zbarQR_obj.scanQRImage(qr_img);
-            Log.d("QR",String.format("readed : %s loop_cnt : %d" ,zbarQR_obj.qrCodeString,loopCounter));
-            decoded = zbarQR_obj.qrCodeString;
-            if(decoded == null){
-                x_offset *= -1.0f;
-                Kinematics KinecCurrent = api.getTrustedRobotKinematics();
-                Point PosCurrent = KinecCurrent.getPosition();
-                moveToWrapper(PosCurrent.getX() + x_offset,PosCurrent.getY(),PosCurrent.getZ(),0,0,-0.707,0.707);
-            }
-        }
-
-        return decoded;
-    }
-
 
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
