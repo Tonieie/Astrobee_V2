@@ -107,7 +107,7 @@ public class YourService extends KiboRpcService {
 
         Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
-        Quaternion rot_qua = alignX(target_relative);
+        Quaternion rot_qua = alignY(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
         kinec_takepic = api.getTrustedRobotKinematics();
@@ -189,6 +189,25 @@ public class YourService extends KiboRpcService {
         double qw = Math.cos(rot_angle/2);
         double qx = 0;
         double qy = Math.sin(rot_angle/2) * rot_axis.getY();
+        double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
+
+        return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
+    }
+
+    public Quaternion alignY(Point target)
+    {
+        double target_dist = Math.sqrt(target.getX() * target.getX() + target.getY() * target.getY() + target.getZ() * target.getZ());
+
+        Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
+        double rot_angle = Math.acos(cosine_dir.getY());
+        double u_x = cosine_dir.getZ() / Math.sin(rot_angle) * -1.0f; //-j cross k
+        double u_y = 0; //j cross j
+        double u_z = cosine_dir.getX() / Math.sin(rot_angle) ; //-j cross i
+        Point rot_axis = new Point(u_x,u_y,u_z);
+
+        double qw = Math.cos(rot_angle/2);
+        double qx = Math.sin(rot_angle/2) * rot_axis.getX();
+        double qy = 0;
         double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
 
         return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
