@@ -6,6 +6,8 @@ import android.util.Log;
 import org.opencv.core.Mat;
 import org.opencv.core.Point3;
 
+import java.lang.annotation.Target;
+
 import gov.nasa.arc.astrobee.Kinematics;
 import gov.nasa.arc.astrobee.Result;
 import gov.nasa.arc.astrobee.types.Point;
@@ -40,7 +42,6 @@ public class YourService extends KiboRpcService {
 
         // QR
         Mat imageCamera = new Mat();
-        Point pos_takepic = new Point();
 
         zbarQR_obj = new zbarQR();
         float qr_offset = 0.1f;
@@ -50,9 +51,6 @@ public class YourService extends KiboRpcService {
         {
             moveToWrapper( 11.11f + qr_offset , -9.8f, 4.79,0,0,-0.707,0.707);
             imageCamera = api.getMatNavCam();
-            Kinematics kinec_takepic = api.getTrustedRobotKinematics();
-            pos_takepic = kinec_takepic.getPosition();
-
             qr_attemp++;
             Log.d("QR",String.format("Start to read QR : %d",qr_attemp));
             zbarQR_obj.scanQRImage(imageCamera);
@@ -70,9 +68,13 @@ public class YourService extends KiboRpcService {
 
         //AR
         moveToWrapper( 11.21f , -10.0f, 4.95,0,0,-0.707,0.707);
-        Mat qr_img = api.getMatNavCam();
+        Mat ar_img = api.getMatNavCam();
+        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
+        Point pos_takepic = kinec_takepic.getPosition();
+        Quaternion qua_takepic = kinec_takepic.getOrientation();
+
         ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(qr_img,camMatrix,dstMatrix);
+        ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
@@ -84,6 +86,7 @@ public class YourService extends KiboRpcService {
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
 //        moveToWrapper(pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ(),rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
+        moveToWrapper(pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ(),qua_takepic.getX(),qua_takepic.getY(),qua_takepic.getZ(),qua_takepic.getW());
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
 //        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
