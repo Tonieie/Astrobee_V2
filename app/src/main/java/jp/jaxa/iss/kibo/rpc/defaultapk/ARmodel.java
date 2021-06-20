@@ -97,6 +97,10 @@ public class ARmodel {
                 target_pos.x=target_pos.x+pos_x + x_offset;
                 target_pos.y=target_pos.y+pos_y + y_offset;
                 target_pos.z=target_pos.z+pos_z;
+                Log.d("AR",String.format("pos_x : %f pos_y %f pos_z  %f",pos_x,pos_y,pos_z));
+                for(int j=0;j<corners.size();j++) {
+                    Log.d("AR",String.format("corner %d %d value : %f %f",i,j,corners.get(i).get(0, j)[0],corners.get(i).get(0, j)[1]));
+                }
 
             }
             target_pos.x=target_pos.x/id_cnt;

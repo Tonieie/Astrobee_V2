@@ -68,22 +68,51 @@ public class YourService extends KiboRpcService {
 
         //AR
         moveToWrapper( 11.21f , -9.8f, 4.95,0,0,-0.707,0.707);
-        Mat ar_img = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
-        Quaternion qua_takepic = kinec_takepic.getOrientation();
+        double dx = 11.21f - pos_takepic.getX();
+        double dy = -9.8f - pos_takepic.getY();
+        double dz = 4.95f - pos_takepic.getZ();
+        double ds = Math.sqrt((dx*dx)+(dy*dy)+(dz*dz));
+        int loopCount = 0;
+        while(ds >= 10 && loopCount < 3){
+            loopCount++;
+            moveToWrapper( 11.21f , -9.8f, 4.95,0,0,-0.707,0.707);
+            kinec_takepic = api.getTrustedRobotKinematics();
+            pos_takepic = kinec_takepic.getPosition();
+            dx = 11.21f - pos_takepic.getX();
+            dy = -9.8f - pos_takepic.getY();
+            dz = 4.95f - pos_takepic.getZ();
+            ds = Math.sqrt((dx*dx)+(dy*dy)+(dz*dz));
+        }
+
+        Log.d("AR", String.format("Before x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
+        Mat ar_img = api.getMatNavCam();
+        Log.d("AR", "After take picture");
+        kinec_takepic = api.getTrustedRobotKinematics();
+        pos_takepic = kinec_takepic.getPosition();
+        Log.d("AR", String.format("After x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
+
+
+//        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
+//        Point pos_takepic = kinec_takepic.getPosition();
+//        Quaternion qua_takepic = kinec_takepic.getOrientation();
 
         ARmodel ArucoModel = new ARmodel();
         ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
-        Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+        Log.d("AR", String.format("AR relative : %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
-        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
-        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
+//        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
+//        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
+
+        kinec_takepic = api.getTrustedRobotKinematics();
+        pos_takepic = kinec_takepic.getPosition();
+        Log.d("AR", String.format("After x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
 
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
@@ -100,6 +129,7 @@ public class YourService extends KiboRpcService {
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
 
         moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
+        Log.d("RE", "Reporting...");
         api.reportMissionCompletion();
     }
 
@@ -116,7 +146,7 @@ public class YourService extends KiboRpcService {
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
                               double qua_w){
-        final int LOOP_MAX = 2;
+        final int LOOP_MAX = 10;
         final Point point = new Point(pos_x, pos_y, pos_z);
 
         final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
@@ -127,6 +157,7 @@ public class YourService extends KiboRpcService {
             result = api.moveTo(point, quaternion, false);
             ++loopCounter;
         }
+        Log.d("moveTo", String.format("Counter %d", loopCounter));
     }
 
     public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
@@ -158,6 +189,25 @@ public class YourService extends KiboRpcService {
         double qw = Math.cos(rot_angle/2);
         double qx = 0;
         double qy = Math.sin(rot_angle/2) * rot_axis.getY();
+        double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
+
+        return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
+    }
+
+    public Quaternion alignY(Point target)
+    {
+        double target_dist = Math.sqrt(target.getX() * target.getX() + target.getY() * target.getY() + target.getZ() * target.getZ());
+
+        Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
+        double rot_angle = Math.acos(cosine_dir.getY());
+        double u_x = cosine_dir.getZ() / Math.sin(rot_angle) * -1.0f; //-j cross k
+        double u_y = 0; //j cross j
+        double u_z = cosine_dir.getX() / Math.sin(rot_angle) ; //-j cross i
+        Point rot_axis = new Point(u_x,u_y,u_z);
+
+        double qw = Math.cos(rot_angle/2);
+        double qx = Math.sin(rot_angle/2) * rot_axis.getX();
+        double qy = 0;
         double qz = Math.sin(rot_angle/2) * rot_axis.getZ();
 
         return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
