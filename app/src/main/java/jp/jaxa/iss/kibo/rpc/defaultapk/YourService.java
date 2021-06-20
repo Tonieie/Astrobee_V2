@@ -1,17 +1,12 @@
 package jp.jaxa.iss.kibo.rpc.defaultapk;
 
 
-import android.content.ServiceConnection;
 import android.util.Log;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.opencv.aruco.Aruco;
-import org.opencv.aruco.Dictionary;
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
 import org.opencv.core.Point3;
 
-import java.util.ArrayList;
+import java.lang.annotation.Target;
 
 import gov.nasa.arc.astrobee.Kinematics;
 import gov.nasa.arc.astrobee.Result;
@@ -42,139 +37,81 @@ public class YourService extends KiboRpcService {
 
     @Override
     protected void runPlan1(){
-        // HT HT HT
-
-
-/**
-//                 `./sNNmds:osshy:`
-//              `ydmNMMMMMMMMMMMMMMmhs.
-//            :ydMMMMMMMMMMMMMMMMMMMMMm.
-//         `odMMMMMMMMMMMMMMMMMMMMMMMMd-`
-//         +MMMMMMMMMMMMMMMMMMMMMMMMMMMNd:
-//         .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMm:.
-//       :-yMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNh+
-//        hNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN:
-//        `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm-
-//      `dMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMh`
-//       hMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd`
-//        `hMMMMMMMMmyhNMNMMMMMNmddNMMMMMMMMMd
-//       :MMMMMMMMo:://---:/---/+sdMMMMMMMMs
-//       `NMMMMMNMNhssyyo```+ydyooNMMMMMMMMy
-//       .NMMMMMNMMmddmNmmddmNNNmmMMMMMMMMMy
-//        /NMMMNddddddddddddmddddddddNMMMMm:
-//         /NMMd       .-` `-+.   `  yMMMm-
-//          /NMm       .:--//+-      yMMN`
-//           :hM`       `..-.        dN+-
-//             m/    .`/hhyhmy++    .Mh
-//             +m-   --/+:+///-: ` `sM+
-//            `sMNo:`            .shMMy.
-//          `+mMMMMMm+.       `:yNMMMMMm:`
-//   ``..:+ymMMMMMMMMMNhso++oymMMMMMMMMMMdy+:.``
-//+shdmNMMMMMMMMMMMNymNMMMMMMMMMMMMMMMMMMMMMMMmdhyo/
-//MMMMMMMMMMMMMMmMMN/`-/ydNNNNmmmNMMMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMM+Ndhh/     ```   :MyNMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMdMh              :MNMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMMMMy`           .mMMMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMMMMMy`        `sNMMMMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMMMMMMNs.     -NMMMMMMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMMMMMMMMMo   sMMMMMMMMMMMMMMMMMMMMMMM
-//MMMMMMMMMMMMMMMMMMMMMMMd:yMMMMMMMMMMMMMMMMMMMMMMMM
- */
         api.startMission();
         setCamCalibration();
 
         // QR
-        Point3 QR_target = new Point3(11.21f, -9.8f, 4.79);
-        moveToWrapper( QR_target.x,QR_target.y,QR_target.z,0,0,-0.707,0.707);
-        Log.d("QR","Start to read QR");
+        Mat imageCamera = new Mat();
 
-        Mat imageCamera = api.getMatNavCam();
-        String qr_str = decodeQR(imageCamera);
+        zbarQR_obj = new zbarQR();
+        float qr_offset = 0.1f;
+        int qr_attemp = 0;
+
+        while(zbarQR_obj.qrCodeString == null)
+        {
+            moveToWrapper( 11.11f + qr_offset , -9.8f, 4.79,0,0,-0.707,0.707);
+            imageCamera = api.getMatNavCam();
+            qr_attemp++;
+            Log.d("QR",String.format("Start to read QR : %d",qr_attemp));
+            zbarQR_obj.scanQRImage(imageCamera);
+
+            qr_offset *= -1;
+        }
+
+        Log.d("QR","readed : " + zbarQR_obj.qrCodeString);
+        api.sendDiscoveredQR(zbarQR_obj.qrCodeString);      //scan QR code
+
         StringDecode QRData = new StringDecode();
-        QRData.setString(qr_str);
+        QRData.setString(zbarQR_obj.qrCodeString);      //split decoded QR code
         Log.d("QR","End to read QR");
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
-        //ARUCO
-        Log.d("AR","Start AR function");
-
+        //AR
+        moveToWrapper( 11.21f , -9.8f, 4.95,0,0,-0.707,0.707);
+        Mat ar_img = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
-        Log.d("AR", String.format("pos_takepic : %.3f %.3f %.3f",pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ()));
-
+        Quaternion qua_takepic = kinec_takepic.getOrientation();
 
         ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(imageCamera,camMatrix,dstMatrix);
+        ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
         Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-//        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer // Used in pattern1
-        Point target_relative = new Point(ArucoModel.getPosX() - 0.0422,ArucoModel.getPosY() - 0.1177,ArucoModel.getPosZ() - 0.0826); //offset from NavCam to Astrobee center point // Used in pattern2
+        Point target_relative = new Point(ArucoModel.getPosX() + 0.0994,ArucoModel.getPosY() - 0.0125,ArucoModel.getPosZ() - 0.0285);   //offset from NavCam to LaserPointer
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
-        relativeMoveToWrapper(0.0572,-0.1302,-0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()); //offset from Astrobee center point to LaserPointer // Used in pattern2
-        Log.d("AR","Aligned by ref laser"); // Used in pattern2
+//        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
+//        Log.d("AR","Offseted");
 
-
-        Log.d("AR","Laser control activate");
+        //Laser Control
         api.laserControl(true);
-        Log.d("AR", "laser on");
+        Log.d("QR", "laser");
         api.takeSnapshot();
-        Log.d("AR", "take photo");
-        api.laserControl(false);
-        Log.d("AR", "laser off");
+        Log.d("QR", "take photo");
 
-
-        moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
+        moveToWrapper(10.505,-9,4.50, 0,0, -0.707, 0.707);
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
 
         moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
-
-
-
         api.reportMissionCompletion();
     }
 
-
     @Override
     protected void runPlan2(){
-
+        // write here your plan 2
     }
 
     @Override
     protected void runPlan3(){
-
+        // write here your plan 3
     }
-
-    public String decodeQR(Mat qr_img)
-    {
-        String decoded = null;
-        int loopCounter = 0;
-        float x_offset = 0.1f;
-        while (decoded == null){
-            loopCounter++;
-            zbarQR_obj = new zbarQR();
-            zbarQR_obj.scanQRImage(qr_img);
-            Log.d("QR",String.format("readed : %s loop_cnt : %d" ,zbarQR_obj.qrCodeString,loopCounter));
-            api.sendDiscoveredQR(zbarQR_obj.qrCodeString);
-            decoded = zbarQR_obj.qrCodeString;
-            if(decoded == null){
-                x_offset *= -1.0f;
-                Kinematics KinecCurrent = api.getTrustedRobotKinematics();
-                Point PosCurrent = KinecCurrent.getPosition();
-                moveToWrapper(PosCurrent.getX() + x_offset,PosCurrent.getY(),PosCurrent.getZ(),0,0,-0.707,0.707);
-            }
-        }
-
-        return decoded;
-    }
-
 
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
@@ -186,12 +123,11 @@ public class YourService extends KiboRpcService {
                 (float)qua_z, (float)qua_w);
         Result result = api.moveTo(point, quaternion, false);
         int loopCounter = 0;
-        while(!result.hasSucceeded()|| loopCounter < LOOP_MAX){
+        while(!result.hasSucceeded() && loopCounter < LOOP_MAX){
             result = api.moveTo(point, quaternion, false);
             ++loopCounter;
         }
     }
-
 
     public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
                                       double qua_x, double qua_y, double qua_z,
@@ -215,8 +151,8 @@ public class YourService extends KiboRpcService {
 
         Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
         double rot_angle = Math.acos(cosine_dir.getX());
-        double u_y = cosine_dir.getZ() * - 1.0f; //i cross k
-        double u_z = cosine_dir.getY(); //i cross j
+        double u_y = cosine_dir.getZ() * - 1.0f / Math.sin(rot_angle); //i cross k
+        double u_z = cosine_dir.getY() / Math.sin(rot_angle); //i cross j
         Point rot_axis = new Point(0,u_y,u_z);
 
         double qw = Math.cos(rot_angle/2);
@@ -226,8 +162,6 @@ public class YourService extends KiboRpcService {
 
         return new Quaternion((float)qx,(float)qy,(float)qz,(float)qw);
     }
-
-
 
 }
 
