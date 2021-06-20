@@ -80,19 +80,23 @@ public class ARmodel {
                 if(isID(i,1)) {
                     x_offset *= -1;
                     y_offset *= -1;
+                    Log.d("AR","found id 1");
                 }
                 else if(isID(i,2)) {
                     y_offset *= -1;
+                    Log.d("AR","found id 2");
                 }
                 else if(isID(i,4)) {
                     x_offset *= -1;
+                    Log.d("AR","found id 4");
+                }
+                else {
+                    Log.d("AR","found id 3");
                 }
 
                 target_pos.x=target_pos.x+pos_x + x_offset;
                 target_pos.y=target_pos.y+pos_y + y_offset;
                 target_pos.z=target_pos.z+pos_z;
-
-                Log.d("AR",String.format("found id : %d",ids.get(i,0)[0]));
 
             }
             target_pos.x=target_pos.x/id_cnt;

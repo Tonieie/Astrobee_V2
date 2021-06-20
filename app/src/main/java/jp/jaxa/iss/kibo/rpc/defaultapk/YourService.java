@@ -85,7 +85,6 @@ public class YourService extends KiboRpcService {
         Quaternion rot_qua = alignX(target_relative);
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
-//        moveToWrapper(pos_takepic.getX(),pos_takepic.getY(),pos_takepic.getZ(),qua_takepic.getX(),qua_takepic.getY(),qua_takepic.getZ(),qua_takepic.getW());
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
 //        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
