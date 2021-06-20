@@ -49,6 +49,6 @@ dependencies {
         exclude group: 'junit'
     }
     testCompile 'junit:junit:4.12'
-    compile 'com.quickbirdstudios:opencv:3.4.4-contrib'
+    compile 'com.quickbirdstudios:opencv:4.3.0-contrib'
     compile 'com.yanzhenjie.zbar:zbar:1.0.0'
 }
