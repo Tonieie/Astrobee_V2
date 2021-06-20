@@ -69,8 +69,10 @@ public class YourService extends KiboRpcService {
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
         //AR
+        moveToWrapper( 11.21f , -10.0f, 4.95,0,0,-0.707,0.707);
+        Mat qr_img = api.getMatNavCam();
         ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(imageCamera,camMatrix,dstMatrix);
+        ArucoModel.estimate(qr_img,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %.2f %.2f %.2f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
         Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
@@ -127,8 +129,8 @@ public class YourService extends KiboRpcService {
     }
 
     public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
-                              double qua_x, double qua_y, double qua_z,
-                              double qua_w){
+                                      double qua_x, double qua_y, double qua_z,
+                                      double qua_w){
         final int LOOP_MAX = 2;
         final Point point = new Point(pos_x, pos_y, pos_z);
 
