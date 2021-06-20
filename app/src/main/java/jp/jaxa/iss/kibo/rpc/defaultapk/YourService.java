@@ -98,6 +98,28 @@ public class YourService extends KiboRpcService {
         // write here your plan 3
     }
 
+    public String decodeQR(Mat qr_img)
+    {
+        String decoded = null;
+        int loopCounter = 0;
+        float x_offset = 0.1f;
+        while (decoded == null){
+            loopCounter++;
+            zbarQR_obj = new zbarQR();
+            zbarQR_obj.scanQRImage(qr_img);
+            Log.d("QR",String.format("readed : %s loop_cnt : %d" ,zbarQR_obj.qrCodeString,loopCounter));
+            decoded = zbarQR_obj.qrCodeString;
+            if(decoded == null){
+                x_offset *= -1.0f;
+                Kinematics KinecCurrent = api.getTrustedRobotKinematics();
+                Point PosCurrent = KinecCurrent.getPosition();
+                moveToWrapper(PosCurrent.getX() + x_offset,PosCurrent.getY(),PosCurrent.getZ(),0,0,-0.707,0.707);
+            }
+        }
+
+        return decoded;
+    }
+
 
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
