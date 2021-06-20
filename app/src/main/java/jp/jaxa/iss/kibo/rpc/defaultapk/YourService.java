@@ -100,6 +100,7 @@ public class YourService extends KiboRpcService {
         moveToWrapper(10.505,-8.5,4.50, 0,0, -0.707, 0.707); // avoid KOZ2
 
         moveToWrapper(10.6, -8.0, 4.5,0, 0, -0.707, 0.707); //move to Point B
+        Log.d("RE", "Reporting...");
         api.reportMissionCompletion();
     }
 
@@ -116,7 +117,7 @@ public class YourService extends KiboRpcService {
     public void moveToWrapper(double pos_x, double pos_y, double pos_z,
                               double qua_x, double qua_y, double qua_z,
                               double qua_w){
-        final int LOOP_MAX = 2;
+        final int LOOP_MAX = 10;
         final Point point = new Point(pos_x, pos_y, pos_z);
 
         final Quaternion quaternion = new Quaternion((float)qua_x, (float)qua_y,
@@ -127,6 +128,7 @@ public class YourService extends KiboRpcService {
             result = api.moveTo(point, quaternion, false);
             ++loopCounter;
         }
+        Log.d("moveTo", String.format("Counter %d", loopCounter));
     }
 
     public void relativeMoveToWrapper(double pos_x, double pos_y, double pos_z,
