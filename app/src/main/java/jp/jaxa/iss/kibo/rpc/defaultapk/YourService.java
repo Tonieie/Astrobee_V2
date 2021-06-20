@@ -137,8 +137,8 @@ public class YourService extends KiboRpcService {
 
         Point cosine_dir = new Point(target.getX()/target_dist,target.getY()/target_dist,target.getZ()/target_dist);
         double rot_angle = Math.acos(cosine_dir.getX());
-        double u_y = cosine_dir.getZ() * - 1.0f; //i cross k
-        double u_z = cosine_dir.getY(); //i cross j
+        double u_y = cosine_dir.getZ() * - 1.0f / Math.sin(rot_angle); //i cross k
+        double u_z = cosine_dir.getY() / Math.sin(rot_angle); //i cross j
         Point rot_axis = new Point(0,u_y,u_z);
 
         double qw = Math.cos(rot_angle/2);
