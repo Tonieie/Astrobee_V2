@@ -107,7 +107,10 @@ public class YourService extends KiboRpcService {
 
         Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
         Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
-        Quaternion rot_qua = alignY(target_relative);
+
+        Point target_relative2 = new Point(0.0061,-0.785,0.43);
+        Quaternion rot_qua = alignX(target_relative2);
+
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
 
         kinec_takepic = api.getTrustedRobotKinematics();
