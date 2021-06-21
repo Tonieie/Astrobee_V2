@@ -76,15 +76,12 @@ public class YourService extends KiboRpcService {
         ARmodel ar_detector = new ARmodel();
         ar_detector.estimate(ar_img,camMatrix,dstMatrix);
 
-//        double target_relative2_x = 11.2161f - pos_takepic.getX();
-//        double target_relative2_y = -10.585 - pos_takepic.getY();
-//        double target_relative2_z = 5.38 - pos_takepic.getZ();
-
         Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
         Log.d("AR", String.format("laser x,y,z : %f %f %f", pos_takepic.getX() + 0.0572, pos_takepic.getY() - 0.1302, pos_takepic.getZ() - 0.1111));
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
 
         Quaternion rot_qua = alignX(target_relative2);
+
         kinec_takepic = api.getTrustedRobotKinematics();
         pos_takepic = kinec_takepic.getPosition();
         Log.d("AR", String.format("After alignX x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
@@ -93,7 +90,7 @@ public class YourService extends KiboRpcService {
         relativeMoveToWrapper(0,0,0,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
         Log.d("AR","Aligned");
 
-        relativeMoveToWrapper(0,-0.0572,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
+//        relativeMoveToWrapper(0,-0.0572,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
 
         kinec_takepic = api.getTrustedRobotKinematics();
         pos_takepic = kinec_takepic.getPosition();
