@@ -101,6 +101,8 @@ public class YourService extends KiboRpcService {
         ARmodel ArucoModel = new ARmodel();
         ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
         Log.d("AR", String.format("AR relative : %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+        ArucoModel.setPosZ(ArucoModel.getPosZ() - 0.149f);
+        Log.d("AR", String.format("AR relative when z offset: %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
 //        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
 //        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));

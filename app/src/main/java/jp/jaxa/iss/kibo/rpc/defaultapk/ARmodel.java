@@ -44,6 +44,10 @@ public class ARmodel {
         return (float)target_pos.y;
     }
 
+    public void setPosZ(double value) {
+        target_pos.y = value;
+    }
+
     public void estimate(Mat img,Mat camMatrix,Mat dstMatrix) {
 
 
