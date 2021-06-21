@@ -76,16 +76,17 @@ public class YourService extends KiboRpcService {
 
         ARmodel ar_detector = new ARmodel();
         ar_detector.estimate(ar_img,camMatrix,dstMatrix);
-//        if(ar_detector.getPosX() >= 0.1) {
+//        if(ar_detector.getPosX() >= 0.08) {
 //            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
-//            ar_detector.setPosX(0.1);
+//            ar_detector.setPosX(0.08);
 //        }
-//        else if(ar_detector.getPosX() <= 0.1) {
+//        else if(ar_detector.getPosX() <= -0.08) {
 //            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
-//            ar_detector.setPosX(-0.1);
+//            ar_detector.setPosX(-0.08);
 //        }
         Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
-        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
+        Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
+        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", 0.08, target_relative2.getY(), target_relative2.getZ()));
 
         Quaternion rot_qua = alignX(target_relative2);
 
