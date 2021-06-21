@@ -84,9 +84,9 @@ public class YourService extends KiboRpcService {
 //            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
 //            ar_detector.setPosX(-0.08);
 //        }
-        Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
+        Point target_relative2 = new Point(0.08,ar_detector.getPosY(),ar_detector.getPosZ());
         Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
-        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", 0.08, target_relative2.getY(), target_relative2.getZ()));
+        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX() + 0.08, target_relative2.getY(), target_relative2.getZ()));
 
         Quaternion rot_qua = alignX(target_relative2);
 
