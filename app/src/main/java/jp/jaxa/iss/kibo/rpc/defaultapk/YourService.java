@@ -57,7 +57,7 @@ public class YourService extends KiboRpcService {
 
             qr_offset *= -1;
         }
-
+        qr_offset *= -1;
         Log.d("QR","readed : " + zbarQR_obj.qrCodeString);
         api.sendDiscoveredQR(zbarQR_obj.qrCodeString);      //scan QR code
 
@@ -67,7 +67,6 @@ public class YourService extends KiboRpcService {
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
         //AR
-        moveToWrapper( 11.21f , -9.8f, 4.95,0,0,-0.707,0.707);
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
         Log.d("AR", String.format("after move to AR x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
@@ -76,27 +75,12 @@ public class YourService extends KiboRpcService {
 //        double target_relative2_x = 11.2161f - pos_takepic.getX();
 //        double target_relative2_y = -10.585 - pos_takepic.getY();
 //        double target_relative2_z = 5.38 - pos_takepic.getZ();
-        double target_relative2_x = 11.2161f - 11.21;
+        double target_relative2_x = 11.2161f - (11.11 + qr_offset);
         double target_relative2_y = -10.585 + 9.8;
-        double target_relative2_z = 5.38 - 4.95;
+        double target_relative2_z = 5.38 - 4.79;
         Point target_relative2 = new Point(target_relative2_x,target_relative2_y,target_relative2_z);
         Log.d("AR", String.format("laser x,y,z : %f %f %f", pos_takepic.getX() + 0.0572, pos_takepic.getY() - 0.1302, pos_takepic.getZ() - 0.1111));
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
-
-//        Kinematics kinec_takepic = api.getTrustedRobotKinematics();
-//        Point pos_takepic = kinec_takepic.getPosition();
-//        Quaternion qua_takepic = kinec_takepic.getOrientation();
-
-//        ARmodel ArucoModel = new ARmodel();
-//        ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
-//        Log.d("AR", String.format("AR relative : %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
-
-//        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
-//        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
-
-//        Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
-//        Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
-
 
         Quaternion rot_qua = alignX(target_relative2);
         kinec_takepic = api.getTrustedRobotKinematics();
@@ -112,8 +96,6 @@ public class YourService extends KiboRpcService {
         kinec_takepic = api.getTrustedRobotKinematics();
         pos_takepic = kinec_takepic.getPosition();
         Log.d("AR", String.format("After adjust x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
-//        relativeMoveToWrapper(0,-0.0572 ,0.1111,rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW());
-//        Log.d("AR","Offseted");
 
         //Laser Control
         api.laserControl(true);
