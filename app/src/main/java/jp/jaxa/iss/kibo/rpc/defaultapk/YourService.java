@@ -68,6 +68,7 @@ public class YourService extends KiboRpcService {
 
         //AR
 //        relativeMoveToWrapper(0,0,10,0,0,-0.707,0.707);
+        moveToWrapper( 11.01 , -9.8f, 4.79,0,0,-0.707,0.707);
         Mat ar_img = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
@@ -75,9 +76,11 @@ public class YourService extends KiboRpcService {
 
         ARmodel ar_detector = new ARmodel();
         ar_detector.estimate(ar_img,camMatrix,dstMatrix);
-//        if(Math.abs(ar_detector.getPosX()) >= 0.03)
-//            ar_detector.setPosX(0.02);
-        Point target_relative2 = new Point(ar_detector.getPosX() + 0.12,ar_detector.getPosY(),ar_detector.getPosZ());
+        if(ar_detector.getPosX() >= 0.1)
+            ar_detector.setPosX(0.1);
+        else if(ar_detector.getPosX() <= 0.1)
+            ar_detector.setPosX(-0.1);
+        Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
 
         Quaternion rot_qua = alignX(target_relative2);
