@@ -39,7 +39,7 @@ public class YourService extends KiboRpcService {
     protected void runPlan1(){
         api.startMission();
         setCamCalibration();
-
+        double patter_offset[] = {0.08,0.0396,0.0162,0.0846,0.0247,0.0824,0.0196,0.0375};
         // QR
         Mat imageCamera = new Mat();
 
@@ -84,9 +84,9 @@ public class YourService extends KiboRpcService {
 //            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
 //            ar_detector.setPosX(-0.08);
 //        }
-        Point target_relative2 = new Point(0.08,ar_detector.getPosY(),ar_detector.getPosZ());
-        Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
-        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX() + 0.08, target_relative2.getY(), target_relative2.getZ()));
+        Point target_relative2 = new Point(patter_offset[QRData.getPattern() - 1],ar_detector.getPosY(),ar_detector.getPosZ());
+        Log.d("AR",String.format("real x : %f",ar_detector.getPosX()));
+        Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
 
         Quaternion rot_qua = alignX(target_relative2);
 
