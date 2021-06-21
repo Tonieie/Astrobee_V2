@@ -67,18 +67,20 @@ public class YourService extends KiboRpcService {
         Log.d("QR", String.format("QR A : %d %.2f %.2f %.2f",QRData.getPattern(),QRData.getPosX(),QRData.getPosY(),QRData.getPosZ()));
 
         //AR
+//        relativeMoveToWrapper(0,0,10,0,0,-0.707,0.707);
+        Mat ar_img = api.getMatNavCam();
         Kinematics kinec_takepic = api.getTrustedRobotKinematics();
         Point pos_takepic = kinec_takepic.getPosition();
         Log.d("AR", String.format("after move to AR x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
 
+        ARmodel ar_detector = new ARmodel();
+        ar_detector.estimate(ar_img,camMatrix,dstMatrix);
 
 //        double target_relative2_x = 11.2161f - pos_takepic.getX();
 //        double target_relative2_y = -10.585 - pos_takepic.getY();
 //        double target_relative2_z = 5.38 - pos_takepic.getZ();
-        double target_relative2_x = 11.2161f - (11.11 + qr_offset);
-        double target_relative2_y = -10.585 + 9.8;
-        double target_relative2_z = 5.38 - 4.79;
-        Point target_relative2 = new Point(target_relative2_x,target_relative2_y,target_relative2_z);
+
+        Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
         Log.d("AR", String.format("laser x,y,z : %f %f %f", pos_takepic.getX() + 0.0572, pos_takepic.getY() - 0.1302, pos_takepic.getZ() - 0.1111));
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
 
