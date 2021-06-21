@@ -76,10 +76,14 @@ public class YourService extends KiboRpcService {
 
         ARmodel ar_detector = new ARmodel();
         ar_detector.estimate(ar_img,camMatrix,dstMatrix);
-        if(ar_detector.getPosX() >= 0.1)
-            ar_detector.setPosX(0.1);
-        else if(ar_detector.getPosX() <= 0.1)
-            ar_detector.setPosX(-0.1);
+//        if(ar_detector.getPosX() >= 0.1) {
+//            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
+//            ar_detector.setPosX(0.1);
+//        }
+//        else if(ar_detector.getPosX() <= 0.1) {
+//            Log.d("AR",String.format("real x : *f",ar_detector.getPosX()));
+//            ar_detector.setPosX(-0.1);
+//        }
         Point target_relative2 = new Point(ar_detector.getPosX(),ar_detector.getPosY(),ar_detector.getPosZ());
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
 
