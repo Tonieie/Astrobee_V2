@@ -35,6 +35,7 @@ public class ARmodel {
     public float getPosX() {
         return (float)target_pos.x;
     }
+    public void setPosX(double value) { target_pos.x =  value;}
 
     public float getPosY() {
         return (float)target_pos.z * (-1.0f);
