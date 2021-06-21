@@ -98,17 +98,17 @@ public class YourService extends KiboRpcService {
 //        Point pos_takepic = kinec_takepic.getPosition();
 //        Quaternion qua_takepic = kinec_takepic.getOrientation();
 
-        ARmodel ArucoModel = new ARmodel();
-        ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
-        Log.d("AR", String.format("AR relative : %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
+//        ARmodel ArucoModel = new ARmodel();
+//        ArucoModel.estimate(ar_img,camMatrix,dstMatrix);
+//        Log.d("AR", String.format("AR relative : %f %f %f",ArucoModel.getPosX(),ArucoModel.getPosY(),ArucoModel.getPosZ()));
 
 //        Point target_point = new Point(pos_takepic.getX() + ArucoModel.getPosX(),pos_takepic.getY() + ArucoModel.getPosY(),pos_takepic.getZ() + ArucoModel.getPosZ());
 //        Log.d("AR",String.format("target point : %.3f %.3f %.3f",target_point.getX(),target_point.getY(),target_point.getZ()));
 
-        Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
-        Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
+//        Point target_relative = new Point(ArucoModel.getPosX() + 0.0572,ArucoModel.getPosY() - 0.1302,ArucoModel.getPosZ() - 0.1111);   //offset from NavCam to LaserPointer
+//        Log.d("AR",String.format("target relative : %f %f %f",target_relative.getX(),target_relative.getY(),target_relative.getZ()));
 
-        Point target_relative2 = new Point(0.0061,-0.785,0.43);
+        Point target_relative2 = new Point(11.2161f - pos_takepic.getX(),-10.585 - pos_takepic.getY(),5.38 - pos_takepic.getZ());
         Quaternion rot_qua = alignX(target_relative2);
 
         Log.d("AR",String.format("rot qua : %f %f %f %f",rot_qua.getX(),rot_qua.getY(),rot_qua.getZ(),rot_qua.getW()));
