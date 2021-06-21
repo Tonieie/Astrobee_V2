@@ -93,9 +93,12 @@ public class YourService extends KiboRpcService {
         pos_takepic = kinec_takepic.getPosition();
         Log.d("AR", String.format("After x,y,z : %f %f %f", pos_takepic.getX(), pos_takepic.getY(), pos_takepic.getZ()));
 
-        double target_relative2_x = 11.2161f - (pos_takepic.getX() + 0.0572);
-        double target_relative2_y = -10.585 - (pos_takepic.getY() - 0.1302);
-        double target_relative2_z = 5.38 - (pos_takepic.getZ() + 0.1111);
+//        double target_relative2_x = 11.2161f - (pos_takepic.getX() + 0.0572);
+////        double target_relative2_y = -10.585 - (pos_takepic.getY() - 0.1302);
+////        double target_relative2_z = 5.38 - (pos_takepic.getZ() + 0.1111);
+        double target_relative2_x = 11.2161f - 11.27;
+        double target_relative2_y = -10.585 + 9.93;
+        double target_relative2_z = 5.38 - 4.83;
         Point target_relative2 = new Point(target_relative2_x,target_relative2_y,target_relative2_z);
         Log.d("AR", String.format("laser x,y,z : %f %f %f", pos_takepic.getX() + 0.0572, pos_takepic.getY() - 0.1302, pos_takepic.getZ() + 0.1111));
         Log.d("AR", String.format("target_relative2 x,y,z : %f %f %f", target_relative2.getX(), target_relative2.getY(), target_relative2.getZ()));
